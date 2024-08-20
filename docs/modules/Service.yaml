@@ -1,0 +1,32 @@
+
+models:
+  - Service:
+    - table: services
+    - columns:
+      - id (integer, primary key)
+      - name (string)
+
+    - registerMediaCollections:
+        - image
+
+  - ServiceQuestions:
+    - table: service_questions
+    - columns:
+      - id (integer, primary key)
+      service_id (unsignedInteger, forign key (services.id) )
+      - question_text (text)
+      - question_note (text)
+      - type (ENUM['texterea', 'radios', 'checkboxs', 'options'])
+      - details (array of json) # to save options values
+
+    - registerMediaCollections:
+      - option_image
+
+
+  - ServiceRequest:
+    - table service_requests
+    - columns:
+      - id (integer, primary key)
+      - service_id (unsignedInteger, forign key (services.id) )
+      - user_id (unsignedInteger, forign key (users.id) )
+      - questions_data (array of json)

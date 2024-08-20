@@ -1,0 +1,37 @@
+
+models:
+  - User:
+      - table: users
+      - columns:
+          - id  (integer, primary key)
+          - name (string)
+          - email (string, unique)
+          - phone (string)
+          - password (string, hashed)
+
+        - relations:
+          - belongs to service
+
+      - UserService:
+        - table: user_service
+        - columns:
+          - user_id
+          - service_id
+
+      - Role:
+        - table: roles
+        - columns:
+          - id
+          - name (string, unique)
+
+        -  seed:
+            ['name' => 'customer']
+            ['name' => 'provider']
+
+      - UserRole:
+        - table: user_role
+        - columns:
+          - user_id
+          - role_id
+
+-
