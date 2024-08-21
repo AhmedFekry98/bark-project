@@ -16,6 +16,12 @@ class CategoryDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        // call development table seeders if not production.
+        if ( config('app.env') != 'production' ) {
+            $this->call([
+                CategoryTableSeeder::class
+                // ...
+            ]);
+        }
     }
 }

@@ -4,7 +4,7 @@ models:
     - table: categories
     - columns:
       - id (integer, primary key)
-      - name (string)
+      - name (string, unique)
 
     - registerMediaCollections:
         - image
@@ -14,19 +14,20 @@ models:
     - columns:
       - id (integer, primary key)
       category_id (unsignedInteger, forign key (categorys.id) )
-      - question_text (text)
-      - question_note (text)
+      - question_text (string)
+      - question_note (string, nullable)
       - type (ENUM['texterea', 'radios', 'checkboxs', 'options'])
-      - details (array of json) # to save options values
+      - details (json, nullable) # to save options values
 
     - registerMediaCollections:
       - option_image
 
 
   - CategoryRequest:
-    - table category_requests
+    - table: category_requests
     - columns:
       - id (integer, primary key)
       - category_id (unsignedInteger, forign key (categorys.id) )
-      - user_id (unsignedInteger, forign key (users.id) )
+      - customer_id (unsignedInteger, forign key (users.id) )
+      - provider_id (unsignedInteger, forign key (users.id) )
       - questions_data (array of json)
