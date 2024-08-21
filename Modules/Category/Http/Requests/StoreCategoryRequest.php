@@ -17,7 +17,7 @@ class StoreCategoryRequest extends FormRequest
         $types = implode(',', CategoryQuestion::$types);
 
         return [
-            "name"      => ['required', 'string', 'unique:categories,name,except,id'],
+            "name"      => ['required', 'string', 'unique:categories,name'],
             "image"     => ['required', 'image', 'max:4096'],
 
             // questions rules.
