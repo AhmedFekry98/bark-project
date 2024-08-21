@@ -1,7 +1,7 @@
 
 models:
-  - Service:
-    - table: services
+  - Category:
+    - table: categories
     - columns:
       - id (integer, primary key)
       - name (string)
@@ -9,11 +9,11 @@ models:
     - registerMediaCollections:
         - image
 
-  - ServiceQuestions:
-    - table: service_questions
+  - CategoryQuestions:
+    - table: category_questions
     - columns:
       - id (integer, primary key)
-      service_id (unsignedInteger, forign key (services.id) )
+      category_id (unsignedInteger, forign key (categorys.id) )
       - question_text (text)
       - question_note (text)
       - type (ENUM['texterea', 'radios', 'checkboxs', 'options'])
@@ -23,10 +23,10 @@ models:
       - option_image
 
 
-  - ServiceRequest:
-    - table service_requests
+  - CategoryRequest:
+    - table category_requests
     - columns:
       - id (integer, primary key)
-      - service_id (unsignedInteger, forign key (services.id) )
+      - category_id (unsignedInteger, forign key (categorys.id) )
       - user_id (unsignedInteger, forign key (users.id) )
       - questions_data (array of json)

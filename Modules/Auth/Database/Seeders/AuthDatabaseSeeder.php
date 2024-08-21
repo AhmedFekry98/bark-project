@@ -21,6 +21,7 @@ class AuthDatabaseSeeder extends Seeder
 
         $roles = [
             'admin',
+            'provider',
             'customer',
         ];
 
@@ -31,8 +32,7 @@ class AuthDatabaseSeeder extends Seeder
                 'abilities' => config("roles.$role", []),
             ]);
 
-            User::factory()
-                ->create([
+            User::factory()->create([
                     'email' => "$role@example.com",
                 ])
                 ->assignRole($role);

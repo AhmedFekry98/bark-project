@@ -8,6 +8,9 @@ models:
           - email (string, unique)
           - phone (string)
           - password (string, hashed)
+          - company_name (string)
+          - company_website (nullable, string)
+          - company_size (ENUM('self-emploee', '1-20', '20-50', '50-200', '200+'))
 
         - relations:
           - belongs to service
