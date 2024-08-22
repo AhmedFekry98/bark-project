@@ -17,12 +17,15 @@ class User extends Authenticatable implements HasMedia
     use HasFactory, HasApiTokens, SoftDeletes, WithRoles, InteractsWithMedia;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'phone_number',
+        'name',
         'email',
+        'phone',
         'password',
-        'extra',
+        'category_id',
+        'company_name',
+        'company_website',
+        'company_size',
+        // 'extra',
     ];
 
     protected $hidden = [
@@ -32,7 +35,7 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'password'    => 'hashed',
         'verified_at' => 'datetime',
-        'extra'       => 'array'
+        // 'extra'       => 'array'
     ];
 
     protected static function newFactory()

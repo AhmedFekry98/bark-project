@@ -32,7 +32,8 @@ Route::group([
     Route::post('/verified/{code}', [AuthController::class, 'verified'])->middleware('auth:sanctum');
 });
 
-Route::get('/profiles', [ProfileController::class, 'index'])->middleware(['auth:sanctum']);
+Route::get('/profiles/{role}', [ProfileController::class, 'index'])->middleware(['auth:sanctum'])
+    ->where('role', implode('|', array_keys(config('roles', ['admin' => ['*']]))));
 
 Route::group([
     'prefix'    => 'profile',

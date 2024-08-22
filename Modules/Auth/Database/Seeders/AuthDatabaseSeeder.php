@@ -19,23 +19,23 @@ class AuthDatabaseSeeder extends Seeder
     {
         // Model::unguard();
 
-        $roles = [
-            'admin',
-            'provider',
-            'customer',
-        ];
+        $roles = config('roles', []);
 
 
-        foreach ($roles as $role) {
+        foreach ($roles as $name => $abilities) {
             Role::factory()->create([
-                'name' => $role,
-                'abilities' => config("roles.$role", []),
+                'name'      => $name,
+                'abilities' => $abilities,
             ]);
 
             User::factory()->create([
-                    'email' => "$role@example.com",
-                ])
-                ->assignRole($role);
+                'email'         => "$name@example.com",
+                'category_id'   => $name == 'provider' ? 1 : null,
+                'company_name'  => $name == 'provider' ? fake()->name() : null,
+                'company_website'  => $name == 'provider' ? fake()->name() : null,
+                'company_size'  => $name == 'provider' ? 'self-emploee' : null,
+            ])
+                ->assignRole($name);
         }
     }
 }

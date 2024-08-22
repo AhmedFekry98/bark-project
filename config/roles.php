@@ -4,9 +4,13 @@ return [
 
     'admin' => ['*'],
 
+    'provider' => [
+        'edit-profile',
+        // ...
+    ],
+
     'customer'  => [
-        'view-profile',
-        'edit-profile'
+        'edit-profile',
         // ..
     ],
 ];

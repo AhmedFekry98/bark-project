@@ -15,14 +15,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string(('first_name'));
-            $table->string('last_name');
-            $table->string('phone_number');
+            $table->string("name");
             $table->string('email')->unique();
+            $table->string('phone');
             $table->string('password');
-            $table->json('extra')->default(json_encode([])); // ? this for any more fields you want add to this table.
+            $table->unsignedInteger('category_id')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('company_website')->nullable();
+            $table->string('company_size')->nullable();
             $table->string('verified_at')->nullable(); // for account
-            $table->string('verified_email')->nullable(); // for account
             $table->softDeletes();
             $table->timestamps();
         });

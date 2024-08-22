@@ -99,7 +99,7 @@ class CategoryService
             // get last version of category.
             $category = self::$model::find($categoryId);
 
-            return Result::done(null);
+            return Result::done($category);
         } catch (\Exception $e) {
             return Result::error($e->getMessage());
         }
