@@ -32,7 +32,7 @@ class AuthDatabaseSeeder extends Seeder
                 'email'         => "$name@example.com",
                 'category_id'   => $name == 'provider' ? 1 : null,
                 'company_name'  => $name == 'provider' ? fake()->name() : null,
-                'company_website'  => $name == 'provider' ? fake()->name() : null,
+                'company_website'  => $name == 'provider' ? fake()->url() : null,
                 'company_size'  => $name == 'provider' ? 'self-emploee' : null,
             ])
                 ->assignRole($name);

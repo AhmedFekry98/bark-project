@@ -14,16 +14,24 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'firstName'         => ['required','string', 'min:3', 'max:25'],
-            'lastName'          => ['required','string', 'min:3', 'max:25'],
-            'phoneNumber'      => ['required', 'string', 'min:9', 'max:13'],
-            'email'              => ['required', 'email', 'min:5', 'max:100', 'unique:users,email'],
-            'password'          => ['required','string', 'min:6', 'max:16'],
-            'asRestaurant'      => ['required', 'boolean'],
-            'restaurantName'    => ['exclude_if:asRestaurant,false', 'required', 'string', 'min:1', 'max:50'],
-            'extra.*'           => ['nullable']
-        ];
+        $role = $this->route('role');
+
+        return array_merge(
+            [
+                'name'              => ['required', 'string', 'min:3', 'max:25'],
+                'phone'             => ['required', 'string', 'min:9', 'max:13'],
+                'email'             => ['required', 'email', 'min:5', 'max:100', 'unique:users,email'],
+                'password'          => ['required', 'string', 'min:6', 'max:16'],
+            ],
+
+            $role == 'provider' ? [
+                "categoryId"       =>  ['required', 'integer', 'exists:categories,id'],
+                'companyName'       => ['required', 'string'],
+                'companyWebsite'    => ['required', 'url'],
+                'companySize'       => ['required', 'string'],
+            ]: [],
+
+        );
     }
 
     /**

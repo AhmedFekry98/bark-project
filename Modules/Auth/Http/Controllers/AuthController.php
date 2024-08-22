@@ -76,10 +76,10 @@ class AuthController extends Controller
     }
 
     # Function Register
-    public function register(RegisterRequest $request)
+    public function register(RegisterRequest $request, string $role)
     {
 
-        $result = $this->registerService->register((TDOFacade::make($request)));
+        $result = $this->registerService->register($role,TDOFacade::make($request));
 
         if ($result->isError()) {
             return $this->badResponse(

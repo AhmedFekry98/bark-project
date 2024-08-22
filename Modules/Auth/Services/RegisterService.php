@@ -17,10 +17,7 @@ class RegisterService
 
     public function __construct(
         private VerifiedEmailService $verifiedEmailService
-    )
-    {
-
-    }
+    ) {}
 
     /**
      * The module for restaurants
@@ -29,7 +26,7 @@ class RegisterService
      */
     private static $restaurantModel = Restaurant::class;
 
-    public function register(TDO $userData)
+    public function register(string $role, TDO $userData)
     {
         DB::beginTransaction();
 
@@ -39,30 +36,22 @@ class RegisterService
             );
 
             // get userdata only.
-            $createData = $data->except(['as_restaurant', 'restaurant_name']);
+            $createData = $data
+                // ->except([])
+            ;
+
             // hashin the password.
             $createData['password'] = Hash::make($createData['password']);
+
             // create the user.
             $user = self::$model::create($createData->toArray());
-            // chose role 'restaurant' if asRestaurant equals true.
-            $role = $userData->asRestaurant ? 'restaurant' : 'customer';
+
             // assign role to user.
             $user->assignRole($role);
 
-            // create restaurant record if register as restaurant.
-            if ( $userData->asRestaurant ) {
-                // get spcific keys for restaurant creation proces.
-                $restaurantData = $data->only(['restaurant_name']);
-
-                // assign user id as owner for restaurant.
-                $restaurantData['owner_id'] = $user->id;
-
-                // create restaurant record in database.
-                self::$restaurantModel::create($restaurantData->toArray());
-            }
 
             // send verification code here
-            $this->verifiedEmailService->sendVerificationCode($user);
+            // $this->verifiedEmailService->sendVerificationCode($user);
 
             // transaction is done.
             DB::commit();
