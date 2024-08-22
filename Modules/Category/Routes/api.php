@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Category\Http\Controllers\CategoryController;
+use Modules\Category\Http\Controllers\CategoryProviderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,10 @@ Route::group([
 
     Route::get('/', [CategoryController::class, 'index']);
     Route::post('/create', [CategoryController::class, 'store']);
+
     Route::get('/{id}', [CategoryController::class, 'show']);
+    Route::get('/{id}/providers', [CategoryProviderController::class, 'categoryProviders']);
+
     Route::post('/{id}/update', [CategoryController::class, 'update']);
     Route::post('/{id}/delete', [CategoryController::class, 'destroy']);
 });
