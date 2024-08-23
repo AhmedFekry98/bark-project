@@ -4,7 +4,7 @@ namespace Modules\Category\Transformers;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CategoryCollection extends ResourceCollection
+class ProviderCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,8 +15,8 @@ class CategoryCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'count'     => $this->collection->count(),
-            'items'     => CategoryResource::collection($this->collection),
+            'count'  => $this->collection->count(),
+            'items' => ProviderResource::collection($this->collection),
         ];
     }
 }

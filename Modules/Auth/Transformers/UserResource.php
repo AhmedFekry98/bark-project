@@ -28,13 +28,15 @@ class UserResource extends JsonResource
                 // 'abilities'         => $this->abilities,
             ],
 
-            $role == 'provider'? [
+            $role == 'provider' ? [
                 'company_name'  => $this->company_name,
                 'company_website'  => $this->company_website,
                 'company_size'  => $this->company_size,
-                'category'      => $this->category?->only(['id', 'name'])
+                'sales'         => $this->sales,
+                'social'        => $this->social,
+                'category'      => $this->category?->only(['id', 'name']),
             ]
-            : [],
+                : [],
 
             [
                 'created_at'        => $this->created_at,

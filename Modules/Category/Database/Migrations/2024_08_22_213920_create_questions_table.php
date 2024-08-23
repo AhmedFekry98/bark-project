@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Category\Entities\CategoryQuestion;
+use Modules\Category\Entities\Question;
 
 return new class extends Migration
 {
@@ -14,13 +14,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('category_questions', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger("category_id");
-            $table->string("question_text");
-            $table->string("question_note")->nullable();
-            $table->enum("type", CategoryQuestion::$types);
-            $table->json("details")->nullable();
+            $table->unsignedInteger('service_id');
+            $table->string('question_text');
+            $table->string('question_note')->nullable();
+            $table->enum('type', Question::$types);
+            $table->json('details')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_questions');
+        Schema::dropIfExists('questions');
     }
 };

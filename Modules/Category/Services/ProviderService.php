@@ -7,16 +7,16 @@ use Graphicode\Standard\TDO\TDO;
 use Modules\Auth\Entities\User;
 use Modules\Category\Entities\Category;
 
-class CategoryProviderService
+class ProviderService
 {
     public static $model = User::class;
 
 
-    public function getProvidersFor(string $categoryId)
+    public function getProvidersFor(string $serviceId)
     {
         try {
             $providers = self::$model::query()
-                ->where('category_id', $categoryId)
+                ->where('service_id', $serviceId)
                 ->get();
 
             return Result::done($providers);

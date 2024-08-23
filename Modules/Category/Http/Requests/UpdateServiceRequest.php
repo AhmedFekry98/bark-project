@@ -4,7 +4,7 @@ namespace Modules\Category\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCustomerRequest extends FormRequest
+class UpdateServiceRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +14,9 @@ class StoreCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-        ];
+            "name"      => ['nullable', 'string'],
+            "image"     => ['nullable', 'image', 'max:4096'],
+        ]
     }
 
     /**

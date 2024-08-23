@@ -3,16 +3,16 @@
 namespace Modules\Category\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\Category\Entities\CategoryQuestion;
+use Modules\Category\Entities\Question;
 
-class CategoryQuestionFactory extends Factory
+class QuestionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = \Modules\Category\Entities\CategoryQuestion::class;
+    protected $model = \Modules\Category\Entities\Question::class;
 
     /**
      * Define the model's default state.
@@ -21,11 +21,11 @@ class CategoryQuestionFactory extends Factory
      */
     public function definition()
     {
-        $type       = $this->faker->randomElement(CategoryQuestion::$types);
+        $type       = $this->faker->randomElement(Question::$types);
         $details    = null;
 
 
-        if (in_array($type, ['radios', 'checkboxs'])) {
+        if (in_array($type, ['radio', 'checkbox'])) {
             $details = [
                 'items' => [
                     'item 1',
@@ -43,3 +43,4 @@ class CategoryQuestionFactory extends Factory
         ];
     }
 }
+

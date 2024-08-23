@@ -4,7 +4,7 @@ namespace Modules\Category\Transformers;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CategoryRequestCollection extends ResourceCollection
+class ServiceRequestCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

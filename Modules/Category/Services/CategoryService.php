@@ -14,7 +14,12 @@ class CategoryService
     public function getCategories()
     {
         try {
-            $categories = self::$model::get();
+            $categories = self::$model::query()
+                ->with('services', function ($q) {
+                    $q->latest()
+                        ->limit(3);
+                })
+                ->get();
 
             return Result::done($categories);
         } catch (\Exception $e) {
@@ -28,29 +33,10 @@ class CategoryService
             $creationData = collect(
                 $tdo->all(asSnake: true)
             )->except([
-                'questions'
+                // keys...
             ])->toArray();
 
             $category = self::$model::create($creationData);
-
-            // create questions.
-            if ($tdo->questions) {
-                $questions = collect($tdo->questions)
-                ->map(function($question) {
-                    $question['question_text']  = $question['questionText'];
-                    $question['question_note']  = $question['questionNote'];
-                    return $question;
-                })->toArray();
-
-                $category->categoryQuestions()
-                    ->createMany($questions);
-            }
-
-            // upload category image.
-            if ($tdo->image) {
-                $category->addMedia($tdo->image)
-                    ->toMediaCollection('image');
-            }
 
             return Result::done($category);
         } catch (\Exception $e) {
@@ -63,7 +49,7 @@ class CategoryService
         try {
             $category = self::$model::find($categoryId);
 
-            if (! $category ) {
+            if (! $category) {
                 return Result::error("No category with id '$categoryId'");
             }
 
@@ -78,23 +64,18 @@ class CategoryService
         try {
             // get category by id with error handlling with cover dry consepts.
             $result = $this->getCategoryById($categoryId);
-            if ( $result->isError() ) return $result; // if has an error stop and go to controller to handle it.
+            if ($result->isError()) return $result; // if has an error stop and go to controller to handle it.
             $category = $result->data; // get model from result object.
 
             $updateData = collect(
                 $tdo->all(asSnake: true)
             )->except([
-                'questions'
+                // keys...
             ])->toArray();
 
             $category->update($updateData);
 
 
-            // upload category image.
-            if ($tdo->image) {
-                $category->addMedia($tdo->image)
-                    ->toMediaCollection('image');
-            }
 
             // get last version of category.
             $category = self::$model::find($categoryId);
@@ -110,7 +91,7 @@ class CategoryService
         try {
             // get category by id with error handlling with cover dry consepts.
             $result = $this->getCategoryById($categoryId);
-            if ( $result->isError() ) return $result; // if has an error stop and go to controller to handle it.
+            if ($result->isError()) return $result; // if has an error stop and go to controller to handle it.
             $category = $result->data; // get model from result object.
 
             // delete category.

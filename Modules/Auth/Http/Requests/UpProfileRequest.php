@@ -28,7 +28,12 @@ class UpProfileRequest extends FormRequest
                 'companyName'       => ['nullable', 'string'],
                 'companyWebsite'    => ['nullable', 'url'],
                 'companySize'       => ['nullable', 'string'],
-            ]: [],
+            ] : [],
+
+            [
+                'sales'     => ['nullable', 'boolean'],
+                'social'    => ['nullable', 'boolean'],
+            ]
 
         );
     }

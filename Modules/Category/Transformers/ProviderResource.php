@@ -4,7 +4,7 @@ namespace Modules\Category\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryProviderResource extends JsonResource
+class ProviderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

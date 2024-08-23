@@ -14,8 +14,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            "name"      => ['nullable', 'string'],
-            "image"     => ['nullable', 'image', 'max:4096'],
+            'name'  => ['required', 'string', 'min:1', 'max:100'],
         ];
     }
 

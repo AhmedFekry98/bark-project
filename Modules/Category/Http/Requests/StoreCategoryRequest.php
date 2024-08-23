@@ -3,7 +3,6 @@
 namespace Modules\Category\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Modules\Category\Entities\CategoryQuestion;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -14,18 +13,8 @@ class StoreCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $types = implode(',', CategoryQuestion::$types);
-
         return [
-            "name"      => ['required', 'string', 'unique:categories,name'],
-            "image"     => ['required', 'image', 'max:4096'],
-
-            // questions rules.
-            "questions"                   => ['required', 'array', 'min:1'],
-            "questions.*.questionText"   => ['required', 'string', 'min:1', 'max:200'],
-            "questions.*.questionNote"   => ['nullable', 'string', 'min:1', 'max:200'],
-            "questions.*.type"              => ['required', 'string', "in:$types"],
-            "questions.*.details"   => ['nullable', 'array'],
+            'name'  => ['required', 'string', 'min:1', 'max:100'],
         ];
     }
 

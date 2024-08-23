@@ -30,7 +30,7 @@ class AuthDatabaseSeeder extends Seeder
 
             User::factory()->create([
                 'email'         => "$name@example.com",
-                'category_id'   => $name == 'provider' ? 1 : null,
+                'service_id'   => $name == 'provider' ? 1 : null,
                 'company_name'  => $name == 'provider' ? fake()->name() : null,
                 'company_website'  => $name == 'provider' ? fake()->url() : null,
                 'company_size'  => $name == 'provider' ? 'self-emploee' : null,

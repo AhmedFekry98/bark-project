@@ -21,10 +21,12 @@ class User extends Authenticatable implements HasMedia
         'email',
         'phone',
         'password',
-        'category_id',
+        'service_id',
         'company_name',
         'company_website',
         'company_size',
+        'sales',
+        'social',
         // 'extra',
     ];
 

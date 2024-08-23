@@ -4,6 +4,9 @@ namespace Modules\Category\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Category\Entities\Category;
+use Modules\Category\Entities\Question;
+use Modules\Category\Entities\Service;
 
 class CategoryDatabaseSeeder extends Seeder
 {
@@ -16,12 +19,18 @@ class CategoryDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // call development table seeders if not production.
-        if ( config('app.env') != 'production' ) {
-            $this->call([
-                CategoryTableSeeder::class
-                // ...
-            ]);
-        }
+        $categoryFactory = Category::factory();
+
+        $serviceFactory = Service::factory();
+
+        $questionFactory = Question::factory();
+
+        $categoryFactory->count(6)
+            ->has(
+                $serviceFactory->count(3)
+                    ->has(
+                        $questionFactory->count(4)
+                    )
+            )->create();
     }
 }
