@@ -17,6 +17,7 @@ class SQService
     {
         try {
             $creationData =$tdo->all(asSnake: true);
+            $creationData['user_id'] = auth()->id();
 
             $serviceRequest = self::$model::create($creationData);
 

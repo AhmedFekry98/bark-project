@@ -3,6 +3,7 @@
 namespace Modules\Auth\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Category\Transformers\ServiceRequestResource;
 
 class UserResource extends JsonResource
 {
@@ -28,13 +29,18 @@ class UserResource extends JsonResource
                 // 'abilities'         => $this->abilities,
             ],
 
+            $role == 'customer' ? [
+                'serviceRequestsSent'   => ServiceRequestResource::collection($this->serviceRequestsSent),
+            ]: [],
+
             $role == 'provider' ? [
                 'company_name'  => $this->company_name,
                 'company_website'  => $this->company_website,
-                'company_size'  => $this->company_size,
-                'sales'         => $this->sales,
-                'social'        => $this->social,
-                'category'      => $this->category?->only(['id', 'name']),
+                'company_size'       => $this->company_size,
+                'sales'              => $this->sales,
+                'social'             => $this->social,
+                'service'           => $this->service?->only(['id', 'name']),
+                'serviceRequests'   => ServiceRequestResource::collection($this->serviceRequests),
             ]
                 : [],
 

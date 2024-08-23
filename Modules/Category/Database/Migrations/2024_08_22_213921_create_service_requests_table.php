@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('service_requests', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('service_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('hired_id');
             $table->json('questions_data');
             $table->timestamps();
