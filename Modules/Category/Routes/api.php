@@ -24,7 +24,7 @@ Route::group([
     Route::group([
         'prefix' => 'services'
     ], function () {
-        Route::get('/', [CategoryController::class, 'index']);
+        Route::get('/', [ServiceController::class, 'index']);
         Route::post('/create', [ServiceController::class, 'store']);
         Route::post('/requests/create', [ServiceRequestController::class, 'store']);
         Route::get('/{id}', [ServiceController::class, 'show']);
