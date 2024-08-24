@@ -27,8 +27,9 @@ Route::group([
         Route::get('/', [ServiceController::class, 'index']);
         Route::post('/create', [ServiceController::class, 'store']);
         Route::post('/requests/create', [ServiceRequestController::class, 'store'])->middleware(['auth:sanctum']);
+        Route::post('/requests/{id}/hire', [ServiceRequestController::class, 'hire'])->middleware(['auth:sanctum']);
+        Route::get('/requests/{id}/providers', [ProviderController::class, 'categoryProviders']);
         Route::get('/{id}', [ServiceController::class, 'show']);
-        Route::get('/{id}/providers', [ProviderController::class, 'categoryProviders']);
         Route::post('/{id}/update', [ServiceController::class, 'update']);
         Route::post('/{id}/delete', [ServiceController::class, 'destroy']);
     });

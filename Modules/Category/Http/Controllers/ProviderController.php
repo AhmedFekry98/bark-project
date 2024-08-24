@@ -16,9 +16,9 @@ class ProviderController extends Controller
         private ProviderService $providerService
     ) {}
 
-    public function categoryProviders(string $serviceId)
+    public function categoryProviders(string $serviceRequestId)
     {
-        $result = $this->providerService->getProvidersFor($serviceId);
+        $result = $this->providerService->getProvidersFor($serviceRequestId);
 
         if ($result->isError()) {
             return $this->badResponse(
