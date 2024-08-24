@@ -11,6 +11,7 @@ use Modules\Category\Http\Requests\HireProviderRequest;
 use Modules\Category\Http\Requests\StoreServiceRequest;
 use Modules\Category\Http\Requests\StoreSQRequest;
 use Modules\Category\Services\SQService;
+use Modules\Category\Transformers\ProviderResource;
 use Modules\Category\Transformers\ServiceRequestResource;
 
 class ServiceRequestController extends Controller
@@ -53,7 +54,7 @@ class ServiceRequestController extends Controller
 
     public function hire(string $serviceRequestId, HireProviderRequest $request)
     {
-        $result = $this->SQService->hireProvider( TDOFacade::make($request));
+        $result = $this->SQService->hireProvider($serviceRequestId, TDOFacade::make($request));
 
         if ($result->isError()) {
             return $this->badResponse(
@@ -63,7 +64,7 @@ class ServiceRequestController extends Controller
 
         return $this->okResponse(
             message: "hired a provider successfuly",
-            data: ServiceRequestResource::make($result->data)
+            data: ProviderResource::make($result->data)
         );
     }
 

@@ -39,6 +39,8 @@ class SQService
             $serviceRequest->hired_id = $tdo->hiredId;
             $serviceRequest->save();
 
+
+
             return Result::done($serviceRequest->provider);
         } catch (\Exception $e) {
             return Result::error($e->getMessage());
