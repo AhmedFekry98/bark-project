@@ -18,7 +18,7 @@ class ProviderService
         try {
             $serviceRequest = ServiceRequest::find($serviceRequestId);
 
-            if (! $serviceRequest ) {
+            if (! $serviceRequest) {
                 return Result::error("No service request with id '$serviceRequestId'");
             }
 
@@ -26,22 +26,24 @@ class ProviderService
                 ->where('service_id', $serviceRequest->service_id)
                 ->get();
 
-                // match ids.
-                // $providers = $providers->filter(function($provider) use ($serviceRequest) {
+            foreach ($serviceRequest->questions_data as $index => $questionData) {
+                $providers = $providers->filter(function ($provider) use ($index, $questionData) {
 
-                //     $serviceData = $provider->service_data;
-                //     if (!$serviceData) return false;
+                    $serviceData = $provider->service_data;
+                    if (! $serviceData ) return false;
 
-                //     if (is_array($serviceData)) {
+                    $question = $serviceData[$index] ?? null;
+                    if (! $serviceData ) return false;
 
-                //     }
+                    $idCheck = $questionData['id'] == $question['id'];
+                    $textCheck = $questionData['text'] == $question['text'];
+                    $valueCheck = $questionData['value'] == $question['value'];
 
-                //     return true;
-                // });
 
-                // match text
+                    return $idCheck && $textCheck && $valueCheck;
+                });
+            }
 
-                // match values
 
             return Result::done($providers);
         } catch (\Exception $e) {
