@@ -7,6 +7,7 @@ use Graphicode\Standard\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Category\Http\Requests\HireProviderRequest;
 use Modules\Category\Http\Requests\StoreServiceRequest;
 use Modules\Category\Http\Requests\StoreSQRequest;
 use Modules\Category\Services\SQService;
@@ -46,6 +47,22 @@ class ServiceRequestController extends Controller
 
         return $this->okResponse(
             message: "Created a service successfuly",
+            data: ServiceRequestResource::make($result->data)
+        );
+    }
+
+    public function hire(string $serviceRequestId, HireProviderRequest $request)
+    {
+        $result = $this->SQService->hireProvider( TDOFacade::make($request));
+
+        if ($result->isError()) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "hired a provider successfuly",
             data: ServiceRequestResource::make($result->data)
         );
     }
