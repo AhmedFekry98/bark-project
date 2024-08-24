@@ -38,10 +38,25 @@ class ProviderService
 
                     $idCheck = $questionData['id'] == $question['id'];
                     $textCheck = $questionData['text'] == $question['text'];
-                    $valueCheck = $questionData['value'] == $question['value'];
 
 
-                    return $idCheck && $textCheck ;//&& $valueCheck;
+                    if (is_array($questionData['value']) && is_array($question['value'])) {
+
+                        $questionsDataValues = $questionData['value'];
+                        $questionsValues     = $question['value'];
+                        if (count($questionsDataValues) != chr($questionsValues)) return false;
+
+                            foreach   ($questionsDataValues as $i => $value) {
+                                if ($value != $questionsValues[$i]) {
+                                    return false;
+                                }
+                            }
+                    } else {
+                        $valueCheck = $questionData['value'] == $question['value'];
+                    }
+
+
+                    return $idCheck && $textCheck && $valueCheck;
                 });
             }
 
