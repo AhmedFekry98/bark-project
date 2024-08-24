@@ -20,7 +20,7 @@ class StoreSQRequest extends FormRequest
             "questionsData"             => ['required', 'array', 'min:1'],
             "questionsData.*.id"       => ['required', 'integer', 'exists:questions,id'],
             "questionsData.*.text"     => ['required', 'string', 'min:1', 'max:200'],
-            "questionsData.*.value"    => ['required', 'string', 'min:1', 'max:200'],
+            "questionsData.*.value"    => ['required', ],
         ];
     }
 
