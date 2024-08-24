@@ -29,6 +29,7 @@ class ProviderService
             foreach ($serviceRequest->questions_data as $index => $questionData) {
                 $providers = $providers->filter(function ($provider) use ($index, $questionData) {
 
+
                     $serviceData = $provider->service_data;
                     if (! $serviceData ) return false;
 
@@ -39,8 +40,8 @@ class ProviderService
                     $textCheck = $questionData['text'] == $question['text'];
                     $valueCheck = $questionData['value'] == $question['value'];
 
-                    return true;
-                    return $idCheck && $textCheck && $valueCheck;
+
+                    return $idCheck && $textCheck ;//&& $valueCheck;
                 });
             }
 
