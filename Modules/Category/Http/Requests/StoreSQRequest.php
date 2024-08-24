@@ -15,7 +15,7 @@ class StoreSQRequest extends FormRequest
     {
         return [
             "serviceId"     => ['required', 'integer', 'exists:services,id'],
-            "hiredId"       => ['required', 'integer', 'exists:users,id'],
+            // "hiredId"       => ['required', 'integer', 'exists:users,id'],
 
             "questionsData"             => ['required', 'array', 'min:1'],
             "questionsData.*.id"       => ['required', 'integer', 'exists:questions,id'],

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedInteger('hired_id');
+            $table->unsignedInteger('hired_id')->nullable();
             $table->json('questions_data');
             $table->timestamps();
         });
