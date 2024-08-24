@@ -40,6 +40,7 @@ class UserResource extends JsonResource
                 'sales'              => $this->sales,
                 'social'             => $this->social,
                 'service'           => $this->service?->only(['id', 'name']),
+                'service_data'      => $this->service_data,
                 'serviceRequests'   => ServiceRequestResource::collection($this->serviceRequests),
             ]
                 : [],

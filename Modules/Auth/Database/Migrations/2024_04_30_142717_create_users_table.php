@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('password');
             $table->unsignedInteger('service_id')->nullable();
+            $table->json('service_data')->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_website')->nullable();
             $table->string('company_size')->nullable();

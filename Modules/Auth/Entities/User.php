@@ -25,6 +25,7 @@ class User extends Authenticatable implements HasMedia
         'phone',
         'password',
         'service_id',
+        'service_data',
         'company_name',
         'company_website',
         'company_size',
@@ -40,7 +41,8 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'password'    => 'hashed',
         'verified_at' => 'datetime',
-        // 'extra'       => 'array'
+        'service_data'  => 'array',
+        // 'extra'       => 'array',
     ];
 
     protected static function newFactory()
