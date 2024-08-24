@@ -39,7 +39,7 @@ class ProviderService
                     $textCheck = $questionData['text'] == $question['text'];
                     $valueCheck = $questionData['value'] == $question['value'];
 
-
+                    return true;
                     return $idCheck && $textCheck && $valueCheck;
                 });
             }
