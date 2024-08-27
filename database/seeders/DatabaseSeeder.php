@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Auth\Database\Seeders\AuthDatabaseSeeder;
 use Modules\Category\Database\Seeders\CategoryDatabaseSeeder;
+use Modules\World\Database\Seeders\WorldDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
 
         // call modules seeders here.
         $this->call([
+            WorldDatabaseSeeder::class,
             AuthDatabaseSeeder::class,
             CategoryDatabaseSeeder::class,
             // ...

@@ -19,7 +19,9 @@ class ServiceRequest extends Model
     ];
 
     protected $casts = [
-        'questions_data' => 'array'
+        'questions_data' => 'array',
+        'city_id'
+
     ];
 
     protected static function newFactory()
