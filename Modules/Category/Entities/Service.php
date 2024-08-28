@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\Auth\Entities\Profession;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -15,7 +16,7 @@ class Service extends Model implements HasMedia
 
     protected $fillable = [
         'category_id',
-        'name'
+        'profession_id'
     ];
 
     protected static function newFactory()
@@ -33,6 +34,11 @@ class Service extends Model implements HasMedia
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function profession(): BelongsTo
+    {
+        return $this->belongsTo(Profession::class);
     }
 
     public function questions(): HasMany

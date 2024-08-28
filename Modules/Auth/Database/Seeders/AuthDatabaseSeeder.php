@@ -5,6 +5,7 @@ namespace Modules\Auth\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Auth\Entities\Profession;
 use Modules\Auth\Entities\Role;
 use Modules\Auth\Entities\User;
 
@@ -28,14 +29,22 @@ class AuthDatabaseSeeder extends Seeder
                 'abilities' => $abilities,
             ]);
 
-            User::factory()->create([
+            $user = User::factory()->create([
                 'email'         => "$name@example.com",
-                'service_id'   => $name == 'provider' ? 1 : null,
                 'company_name'  => $name == 'provider' ? fake()->name() : null,
                 'company_website'  => $name == 'provider' ? fake()->url() : null,
                 'company_size'  => $name == 'provider' ? 'self-emploee' : null,
-            ])
-                ->assignRole($name);
+            ]);
+
+            $user->assignRole($name);
+
+            if ($name == 'provider') {
+                $user->professions()->attach([1]);
+            }
         }
+
+        $this->call([
+            ProfessionTableSeeder::class
+        ]);
     }
 }

@@ -26,7 +26,8 @@ class RegisterRequest extends FormRequest
             ],
 
             $role == 'provider' ? [
-                "serviceId"       =>  ['required', 'integer', 'exists:services,id'],
+                "professions"       =>  ['required', 'array', 'min:1', 'max:5'],
+                'professions.*'     => ['required', 'integer', 'exists:professions,id'],
                 'companyName'       => ['required', 'string'],
                 'companyWebsite'    => ['nullable', 'url'],
                 'companySize'       => ['required', 'string'],

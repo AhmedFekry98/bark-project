@@ -36,9 +36,7 @@ class RegisterService
             );
 
             // get userdata only.
-            $createData = $data
-                // ->except([])
-            ;
+            $createData = $data->except(['professions']);
 
             // hashin the password.
             $createData['password'] = Hash::make($createData['password']);
@@ -48,6 +46,10 @@ class RegisterService
 
             // assign role to user.
             $user->assignRole($role);
+
+            if ($role == 'provider') {
+                $user->professions()->attach($userData->professions);
+            }
 
 
             // send verification code here

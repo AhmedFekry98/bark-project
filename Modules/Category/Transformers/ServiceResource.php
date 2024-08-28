@@ -15,10 +15,10 @@ class ServiceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        => $this->id,
-            'name'      => $this->name,
-            'image'     => $this->getFirstMediaUrl('image'),
-            'questions' => QuestionResource::collection($this->questions),
+            'id'               => $this->id,
+            'profession_name'  => $this->profession->name,
+            'image'            => $this->getFirstMediaUrl('image'),
+            'questions'        => QuestionResource::collection($this->questions),
         ];
     }
 }

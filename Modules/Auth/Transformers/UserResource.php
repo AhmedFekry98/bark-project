@@ -48,8 +48,7 @@ class UserResource extends JsonResource
                 'company_size'       => $this->company_size,
                 'sales'              => $this->sales,
                 'social'             => $this->social,
-                'service'           => ServiceResource::make($this->service),
-                'service_data'      => $this->service_data,
+                'professions'           => ProfessionResource::collection($this->professions),
                 'serviceRequests'   => ServiceRequestResource::collection($this->serviceRequests),
             ]
                 : [],

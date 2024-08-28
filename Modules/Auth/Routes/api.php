@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Modules\Auth\Http\Controllers\AuthController;
+use Modules\Auth\Http\Controllers\ProfessionController;
 use Modules\Auth\Http\Controllers\ProfileController;
 
 /*
@@ -16,6 +17,7 @@ use Modules\Auth\Http\Controllers\ProfileController;
 |
 */
 
+Route::get('/professions', ProfessionController::class);
 
 Route::group([
     'prefix' => 'auth',

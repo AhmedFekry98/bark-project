@@ -5,6 +5,7 @@ namespace Modules\Auth\Entities;
 use App\Traits\WithRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -79,5 +80,10 @@ class User extends Authenticatable implements HasMedia
     public function serviceRequests(): HasMany
     {
         return $this->hasMany(ServiceRequest::class, 'hired_id');
+    }
+
+    public function professions(): BelongsToMany
+    {
+        return $this->belongsToMany(Profession::class);
     }
 }

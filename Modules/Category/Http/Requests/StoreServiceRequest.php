@@ -18,7 +18,7 @@ class StoreServiceRequest extends FormRequest
 
         return [
             "categoryId"    => ['required', 'integer', 'exists:categories,id'],
-            "name"          => ['required', 'string'],
+            "professionId"          => ['required', 'integer', 'exists:professions,id'],
             "image"         => ['required', 'image', 'max:4096'],
 
             // questions rules.

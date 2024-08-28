@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('profession_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('category_id');
             $table->unsignedInteger('profession_id');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('profession_user');
     }
 };
