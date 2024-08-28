@@ -6,7 +6,9 @@ use App\ErrorHandlling\Result;
 use Graphicode\Standard\TDO\TDO;
 use Modules\Category\Entities\Category;
 use Modules\Category\Entities\Service;
+use Modules\Category\Filters\CityIdFilter;
 use Modules\Category\Filters\LimitFilter;
+use Modules\Category\Filters\SearchFilter;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -21,7 +23,9 @@ class SCRUDService
             $services = QueryBuilder::for(self::$model)
                 ->latest()
                 ->AllowedFilters([
-                    AllowedFilter::custom('limit', new LimitFilter)
+                    AllowedFilter::custom('limit', new LimitFilter),
+                    AllowedFilter::custom('search', new SearchFilter),
+                    AllowedFilter::custom('cityId', new CityIdFilter)
                 ])
                 ->with('questions')
                 ->get();

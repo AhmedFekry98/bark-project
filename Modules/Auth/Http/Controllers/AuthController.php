@@ -39,8 +39,7 @@ class AuthController extends Controller
         private ChangePasswordService $changePasswordService,
         private VerifiedEmailService $verifiedEmailService
 
-    ) {
-    }
+    ) {}
 
 
     public function sendVerifiedCode(Request $request)
@@ -79,7 +78,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request, string $role)
     {
 
-        $result = $this->registerService->register($role,TDOFacade::make($request));
+        $result = $this->registerService->register($role, TDOFacade::make($request));
 
         if ($result->isError()) {
             return $this->badResponse(
@@ -90,6 +89,8 @@ class AuthController extends Controller
         $user = $result->data;
         $deviceName = $request->post("device_name", $request->userAgent());
         $token = $user->createToken($deviceName, $user->abilities)->plainTextToken;
+
+        UserResource::$isMasked = false;
 
         return $this->okResponse(
             [
@@ -114,6 +115,8 @@ class AuthController extends Controller
         $user = $result->data;
         $deviceName = $request->post("device_name", $request->userAgent());
         $token = $user->createToken($deviceName, $user->abilities)->plainTextToken;
+
+        UserResource::$isMasked = false;
 
         return $this->okResponse(
             [

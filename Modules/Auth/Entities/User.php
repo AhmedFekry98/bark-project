@@ -25,6 +25,7 @@ class User extends Authenticatable implements HasMedia
         'phone',
         'password',
         'service_id',
+        'city_id',
         'service_data',
         'company_name',
         'company_website',
