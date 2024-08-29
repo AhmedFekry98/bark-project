@@ -84,7 +84,7 @@ class ProfileController extends Controller
     }
 
     return $this->okResponse(
-      UserResource::make($result->data),
+      $result->data,
       $messge = "Deleted profile Successfuly."
     );
   }
