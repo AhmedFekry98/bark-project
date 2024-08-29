@@ -13,6 +13,22 @@ class SQService
     public static $model = ServiceRequest::class;
 
 
+    public function getRequests()
+    {
+        try {
+            $requests = self::$model::query()
+            // where city
+            //  where services
+                ->get();
+
+
+            return Result::done($requests);
+        } catch (\Exception $e) {
+            return Result::error($e->getMessage());
+        }
+    }
+
+
     public function storeRequest(TDO $tdo)
     {
         try {

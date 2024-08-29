@@ -28,7 +28,18 @@ class ServiceRequestController extends Controller
      */
     public function index()
     {
-        //
+        $result = $this->SQService->getRequests();
+
+        if ($result->isError()) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "Get all services reuqests successfuly",
+            data: ServiceRequestResource::collection($result->data)
+        );
     }
 
     /**
@@ -47,7 +58,7 @@ class ServiceRequestController extends Controller
         }
 
         return $this->okResponse(
-            message: "Created a service successfuly",
+            message: "Created a service request successfuly",
             data: ServiceRequestResource::make($result->data)
         );
     }
