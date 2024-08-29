@@ -56,7 +56,7 @@ class ServiceRequestController extends Controller
 
         return $this->okResponse(
             message: "Get all leads successfuly",
-            data: LeadCollection::collection($result->data)
+            data: LeadCollection::make($result->data)
         );
     }
 
