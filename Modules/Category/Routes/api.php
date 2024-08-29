@@ -30,7 +30,10 @@ Route::group([
         Route::post('/create', [ServiceController::class, 'store'])
             ->middleware(['auth:sanctum', "role:admin"]);
 
-        Route::get('/requests', [ServiceRequestController::class, 'index'])->middleware(['auth:sanctum'])
+        Route::get('/requests', [ServiceRequestController::class, 'index'])
+            ->middleware(['auth:sanctum', "role:customer"]);
+
+        Route::get('/requests/leads', [ServiceRequestController::class, 'indexLeads'])
             ->middleware(['auth:sanctum', "role:provider"]);
 
         Route::post('/requests/create', [ServiceRequestController::class, 'store'])->middleware(['auth:sanctum'])

@@ -42,6 +42,22 @@ class ServiceRequestController extends Controller
         );
     }
 
+    public function indexLeads()
+    {
+        $result = $this->SQService->getRequests();
+
+        if ($result->isError()) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "Get all leads successfuly",
+            data: ServiceRequestResource::collection($result->data)
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      * @param Request $request
