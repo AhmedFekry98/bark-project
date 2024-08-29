@@ -31,6 +31,10 @@ class ServiceRequestResource extends JsonResource
 
     public function maskEmail(string $email)
     {
+        if (! static::$isMasked ) {
+            return $email;
+        }
+
 
         list($username, $domain) = explode('@', $email);
         $usernameLength = strlen($username);
@@ -46,6 +50,9 @@ class ServiceRequestResource extends JsonResource
 
     public function maskPhone(string $phone)
     {
+        if (! static::$isMasked ) {
+            return $phone;
+        }
 
         $phoneLength = strlen($phone);
 
