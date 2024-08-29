@@ -21,6 +21,7 @@ class ServiceFactory extends Factory
     public function definition()
     {
         return [
+            "profession_id" => 1,
         ];
     }
 }
