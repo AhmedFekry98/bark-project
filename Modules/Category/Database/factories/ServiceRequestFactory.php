@@ -20,9 +20,23 @@ class ServiceRequestFactory extends Factory
      */
     public function definition()
     {
+
         return [
-            //
+            'questions_data' => [
+                [
+                    'questionId'    => 1,
+                    'text'          => "Question 1",
+                    "value"         => "answer 2",
+                ],
+                [
+                    'questionId'    => 2,
+                    'text'          => "Question 2",
+                    "value"         => [
+                        'value 1',
+                        'value 2'
+                    ]
+                ]
+            ],
         ];
     }
 }
-

@@ -18,10 +18,14 @@ class ProfileService
     /**
      * Get all profiles.
      */
-    public function getAllProfiles()
+    public function getAllProfiles(string $role)
     {
         try {
-            $profiles = self::$model::all();
+            $profiles = self::$model::query()
+                ->whereHas('roles', function ($q) use ($role) {
+                    $q->where('name', $role);
+                })
+                ->get();
             return Result::done($profiles);
         } catch (\Exception $e) {
             return Result::error($e->getMessage());
@@ -75,7 +79,7 @@ class ProfileService
             }
 
             // update restaurant caver.
-            if ( $user->role == 'restaurant' && $tdo->restaurantImage ) {
+            if ($user->role == 'restaurant' && $tdo->restaurantImage) {
                 $user->restaurant->addMedia($tdo->restaurantImage)
                     ->toMediaCollection('restaurant-caver');
             }

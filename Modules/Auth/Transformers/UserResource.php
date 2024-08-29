@@ -22,6 +22,7 @@ class UserResource extends JsonResource
         return array_merge(
             // start of object
             [
+                'id'                => $this->id,
                 "name"              => $this->name,
                 'phone'             => $this->phone,
                 'email'             => $this->email,

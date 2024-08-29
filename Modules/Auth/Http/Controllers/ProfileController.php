@@ -24,9 +24,9 @@ class ProfileController extends Controller
   /**
    * Disply listing of Resources
    */
-  public function index()
+  public function index(string $role)
   {
-    $result = $this->profileService->getAllProfiles();
+    $result = $this->profileService->getAllProfiles($role);
 
     if ($result->isError()) {
       return $this->badResponse(
