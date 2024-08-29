@@ -11,6 +11,7 @@ use Modules\Category\Http\Requests\HireProviderRequest;
 use Modules\Category\Http\Requests\StoreServiceRequest;
 use Modules\Category\Http\Requests\StoreSQRequest;
 use Modules\Category\Services\SQService;
+use Modules\Category\Transformers\LeadServiceRequestResource;
 use Modules\Category\Transformers\ProviderResource;
 use Modules\Category\Transformers\ServiceRequestResource;
 
@@ -54,7 +55,7 @@ class ServiceRequestController extends Controller
 
         return $this->okResponse(
             message: "Get all leads successfuly",
-            data: ServiceRequestResource::collection($result->data)
+            data: LeadServiceRequestResource::collection($result->data)
         );
     }
 
