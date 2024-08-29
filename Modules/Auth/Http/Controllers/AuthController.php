@@ -90,7 +90,7 @@ class AuthController extends Controller
         $deviceName = $request->post("device_name", $request->userAgent());
         $token = $user->createToken($deviceName, $user->abilities)->plainTextToken;
 
-        UserResource::$isMasked = false;
+
 
         return $this->okResponse(
             [
@@ -116,7 +116,7 @@ class AuthController extends Controller
         $deviceName = $request->post("device_name", $request->userAgent());
         $token = $user->createToken($deviceName, $user->abilities)->plainTextToken;
 
-        UserResource::$isMasked = false;
+
 
         return $this->okResponse(
             [

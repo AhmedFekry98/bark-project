@@ -10,13 +10,6 @@ class UserResource extends JsonResource
 {
 
     /**
-     * Switch to masking the contact information
-     *
-     * @var bool $isMasked
-     */
-    public static $isMasked = true;
-
-    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request
@@ -30,8 +23,8 @@ class UserResource extends JsonResource
             // start of object
             [
                 "name"              => $this->name,
-                'phone'             => $this->maskPhone($this->phone),
-                'email'             => $this->maskEmail($this->email),
+                'phone'             => $this->phone,
+                'email'             => $this->email,
                 'image'             => $this->getFirstMediaUrl('user'),
                 // 'verified'          =>  $this->is_verified,
                 'role'              => $role,
@@ -58,40 +51,5 @@ class UserResource extends JsonResource
                 'updated_at'         => $this->updated_at
             ]
         );
-    }
-
-    public function maskEmail(string $email)
-    {
-        if (! static::$isMasked || $this->id == auth()->id()) {
-            return $email;
-        }
-
-        list($username, $domain) = explode('@', $email);
-        $usernameLength = strlen($username);
-
-        if ($usernameLength <= 2) {
-            return str_repeat('*', $usernameLength) . '@' . $domain;
-        }
-
-        $visiblePart = substr($username, 0, 2); // أول 2 أحرف تكون مرئية
-        $maskedPart = str_repeat('*', $usernameLength - 2); // البقية تكون على شكل نجوم
-        return $visiblePart . $maskedPart . '@' . $domain;
-    }
-
-    public function maskPhone(string $phone)
-    {
-        if (! static::$isMasked || $this->id == auth()->id()) {
-            return $phone;
-        }
-
-        $phoneLength = strlen($phone);
-
-        if ($phoneLength <= 3) {
-            return str_repeat('*', $phoneLength);
-        }
-
-        $visiblePart = substr($phone, -3);
-        $maskedPart  = str_repeat('*', $phoneLength - 3);
-        return $maskedPart . $visiblePart;
     }
 }
