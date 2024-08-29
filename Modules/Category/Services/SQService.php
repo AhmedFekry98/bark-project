@@ -34,7 +34,7 @@ class SQService
             $requests = self::$model::query()
                 // where city
                 //  where services
-                ->withCount('customer.serviceReqestsSent')
+                // ->withCount('customer.serviceReqestsSent')
                 ->get();
 
 
