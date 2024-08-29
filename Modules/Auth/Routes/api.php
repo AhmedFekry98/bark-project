@@ -34,8 +34,12 @@ Route::group([
     Route::post('/verified/{code}', [AuthController::class, 'verified'])->middleware('auth:sanctum');
 });
 
-Route::get('/profiles/{role}', [ProfileController::class, 'index'])->middleware(['auth:sanctum'])
+Route::get('/profiles/{role}', [ProfileController::class, 'index'])
+    ->middleware(['auth:sanctum', 'role:admin'])
     ->where('role', implode('|', array_keys(config('roles', ['admin' => ['*']]))));
+
+Route::post('/profiles/{id}/delete', [ProfileController::class, 'destroy'])
+    ->middleware(['auth:sanctum', 'role:admin']);
 
 Route::group([
     'prefix'    => 'profile',

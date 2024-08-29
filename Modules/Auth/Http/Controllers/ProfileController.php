@@ -72,4 +72,20 @@ class ProfileController extends Controller
       $messge = "Updated profile data successfuly."
     );
   }
+
+  public function destroy(string $id)
+  {
+    $result = $this->profileService->deleteProfile($id);
+
+    if ($result->isError()) {
+      return $this->badResponse(
+        message: $result->errorMessage
+      );
+    }
+
+    return $this->okResponse(
+      UserResource::make($result->data),
+      $messge = "Deleted profile Successfuly."
+    );
+  }
 }

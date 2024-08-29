@@ -99,4 +99,19 @@ class ProfileService
             return Result::error($e->getMessage());
         }
     }
+
+    public function deleteProfile(string $id)
+    {
+        try {
+            $profile = self::$model::find($id);
+
+            if (! $profile ) {
+                return Result::error("No profile with id $id");
+            }
+
+            return Result::done($profile->delete());
+        } catch (\Exception $e) {
+            return Result::error($e->getMessage());
+        }
+    }
 }
