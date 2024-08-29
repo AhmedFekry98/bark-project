@@ -25,6 +25,7 @@ class CategoryDatabaseSeeder extends Seeder
 
         $questionFactory = Question::factory();
 
+
         $categoryFactory->count(6)
             ->has(
                 $serviceFactory->count(3)
@@ -32,5 +33,10 @@ class CategoryDatabaseSeeder extends Seeder
                         $questionFactory->count(4)
                     )
             )->create();
+
+
+        $this->call([
+            ServiceRequestTableSeeder::class,
+        ]);
     }
 }
