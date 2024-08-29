@@ -24,9 +24,6 @@ class LeadServiceRequestResource extends JsonResource
             'customer_email'            => $this->maskEmail($this->customer->email),
             'customer_phone'            => $this->maskPhone($this->customer->phone),
             "questions_data"             => $this->questions_data,
-            'service_count'     => 5,
-            'match_count'     => 1,
-            'location'        => fake()->city(),
             "created_at"                 => $this->created_at->diffForHumans(),
         ];
     }

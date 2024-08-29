@@ -17,8 +17,24 @@ class SQService
     {
         try {
             $requests = self::$model::query()
-            // where city
-            //  where services
+                // where city
+                //  where services
+                ->get();
+
+
+            return Result::done($requests);
+        } catch (\Exception $e) {
+            return Result::error($e->getMessage());
+        }
+    }
+
+    public function getLeadRequests()
+    {
+        try {
+            $requests = self::$model::query()
+                // where city
+                //  where services
+                ->withCount('customer.serviceReqestsSent')
                 ->get();
 
 
