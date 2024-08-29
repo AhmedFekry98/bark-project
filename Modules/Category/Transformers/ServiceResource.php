@@ -16,7 +16,7 @@ class ServiceResource extends JsonResource
     {
         return [
             'id'               => $this->id,
-            'profession_name'  => $this->profession->name,
+            'name'  => $this->profession->name,
             'image'            => $this->getFirstMediaUrl('image'),
             'questions'        => QuestionResource::collection($this->questions),
         ];
