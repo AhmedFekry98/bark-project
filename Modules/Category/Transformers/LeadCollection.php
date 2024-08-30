@@ -15,9 +15,9 @@ class LeadCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'service_count'     => $this->collection->count(),
-            'match_count'     => 1,
-            'locationcount'        =>   5,
+            'match_count'     => $this->collection->count(),
+            'service_count'     => $this->collection->groupBy('service_id')->count(),
+            'locationcount'        =>   $this->collection->groupBy('city_id')->count(),
             'items' => LeadServiceRequestResource::collection($this->collection),
         ];
     }

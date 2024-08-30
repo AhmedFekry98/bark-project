@@ -31,14 +31,42 @@ class SQService
     public function getLeadRequests()
     {
         try {
+
+
+            $providerr = auth()->user();
+
+            $ignoredIds = $providerr->ignoredRequests->pluck('id');
+
             $requests = self::$model::query()
                 // where city
                 //  where services
-                // ->withCount('customer.serviceReqestsSent')
+                ->whereNotIn('id', $ignoredIds)
                 ->get();
 
 
             return Result::done($requests);
+        } catch (\Exception $e) {
+            return Result::error($e->getMessage());
+        }
+    }
+
+    public function ignoreRequest(string $serviceRequestId)
+    {
+        try {
+            $serviceRequest = ServiceRequest::find($serviceRequestId);
+
+            if (! $serviceRequest) {
+                return Result::error("No service request with id '$serviceRequestId'");
+            }
+
+            $provider = auth()->user();
+
+            $provider->ignoredRequests()->create([
+                'service_request_id'    => $serviceRequest->id
+            ]);
+
+
+            return Result::done(true);
         } catch (\Exception $e) {
             return Result::error($e->getMessage());
         }

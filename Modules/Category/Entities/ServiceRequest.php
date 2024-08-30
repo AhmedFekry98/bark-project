@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Auth\Entities\User;
+use Modules\World\Entities\City;
 
 class ServiceRequest extends Model
 {
@@ -13,13 +14,13 @@ class ServiceRequest extends Model
 
     protected $fillable = [
         'service_id',
+        'city_id',
         'user_id',
         'questions_data'
     ];
 
     protected $casts = [
         'questions_data' => 'array',
-        'city_id'
 
     ];
 
@@ -32,14 +33,18 @@ class ServiceRequest extends Model
     {
         return $this->belongsTo(Service::class);
     }
-
-    public function provider(): BelongsTo
+    public function city(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'hired_id');
+        return $this->belongsTo(City::class);
     }
 
     public function customer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function provider(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'hired_id');
     }
 }

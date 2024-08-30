@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('service_requests', function (Blueprint $table) {
+        Schema::create('ignored_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('service_id');
-            $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedInteger('hired_id')->nullable();
-            $table->json('questions_data');
+            $table->unsignedBigInteger('service_request_id');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('service_requests');
+        Schema::dropIfExists('ignored_requests');
     }
 };

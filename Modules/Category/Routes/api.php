@@ -21,6 +21,7 @@ Route::group([
     'prefix' => '/categories'
 ], function () {
 
+    // START OF SERVICES CROUP ???
     Route::group([
         'prefix' => 'services'
     ], function () {
@@ -30,6 +31,7 @@ Route::group([
         Route::post('/create', [ServiceController::class, 'store'])
             ->middleware(['auth:sanctum', "role:admin"]);
 
+        // START OF REQUESTS GROUP ??
         Route::get('/requests', [ServiceRequestController::class, 'index'])
             ->middleware(['auth:sanctum', "role:customer"]);
 
@@ -39,9 +41,11 @@ Route::group([
         Route::post('/requests/create', [ServiceRequestController::class, 'store'])->middleware(['auth:sanctum'])
             ->middleware(['auth:sanctum', "role:customer"]);
 
+            Route::post('/requests/{id}/ignore', [ServiceRequestController::class, 'ignoreRequest'])->middleware(['auth:sanctum']);
+
         //  deprcated now
-        Route::post('/requests/{id}/hire', [ServiceRequestController::class, 'hire'])->middleware(['auth:sanctum']);
-        Route::get('/requests/{id}/providers', [ProviderController::class, 'categoryProviders']);
+        // Route::post('/requests/{id}/hire', [ServiceRequestController::class, 'hire'])->middleware(['auth:sanctum']);
+        // Route::get('/requests/{id}/providers', [ProviderController::class, 'categoryProviders']);
 
         Route::get('/{id}', [ServiceController::class, 'show']);
 
@@ -51,6 +55,7 @@ Route::group([
         Route::post('/{id}/delete', [ServiceController::class, 'destroy'])
             ->middleware(['auth:sanctum', "role:admin"]);
     });
+    //  END OF SERVICE GROUP !!!
 
     Route::get('/', [CategoryController::class, 'index']);
 

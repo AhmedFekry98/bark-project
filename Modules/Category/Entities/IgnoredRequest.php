@@ -1,0 +1,33 @@
+<?php
+
+namespace Modules\Category\Entities;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Auth\Entities\User;
+
+class IgnoredRequest extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'service_request_id'
+    ];
+
+    protected static function newFactory()
+    {
+        return \Modules\Category\Database\factories\IgnoredRequestFactory::new();
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function serviceRequest(): BelongsTo
+    {
+        return $this->belongsTo(ServiceRequest::class);
+    }
+}

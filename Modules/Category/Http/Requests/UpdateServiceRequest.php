@@ -16,7 +16,7 @@ class UpdateServiceRequest extends FormRequest
         return [
             "name"      => ['nullable', 'string'],
             "image"     => ['nullable', 'image', 'max:4096'],
-        ]
+        ];
     }
 
     /**

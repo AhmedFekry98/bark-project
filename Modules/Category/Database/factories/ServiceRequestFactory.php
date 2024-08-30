@@ -3,6 +3,8 @@
 namespace Modules\Category\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Category\Entities\Service;
+use PHPUnit\Runner\ParameterDoesNotExistException;
 
 class ServiceRequestFactory extends Factory
 {
@@ -13,6 +15,7 @@ class ServiceRequestFactory extends Factory
      */
     protected $model = \Modules\Category\Entities\ServiceRequest::class;
 
+
     /**
      * Define the model's default state.
      *
@@ -20,8 +23,11 @@ class ServiceRequestFactory extends Factory
      */
     public function definition()
     {
+        $services = Service::get();
 
         return [
+            'service_id'     => $services->random()->id,
+            'city_id'        => 6609,
             'questions_data' => [
                 [
                     'questionId'    => 1,

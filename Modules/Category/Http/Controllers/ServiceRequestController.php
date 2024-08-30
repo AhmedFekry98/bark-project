@@ -60,6 +60,22 @@ class ServiceRequestController extends Controller
         );
     }
 
+    public function ignoreRequest(string $id)
+    {
+        $result = $this->SQService->ignoreRequest($id);
+
+        if ($result->isError()) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "Ignored Request successfuly",
+            data: $result->data
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      * @param Request $request

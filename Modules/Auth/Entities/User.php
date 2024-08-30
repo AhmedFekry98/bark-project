@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Category\Entities\Category;
+use Modules\Category\Entities\IgnoredRequest;
 use Modules\Category\Entities\Service;
 use Modules\Category\Entities\ServiceRequest;
 use Spatie\MediaLibrary\HasMedia;
@@ -70,6 +71,11 @@ class User extends Authenticatable implements HasMedia
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function ignoredRequests(): HasMany
+    {
+        return $this->hasMany(IgnoredRequest::class);
     }
 
     public function serviceRequestsSent(): HasMany
