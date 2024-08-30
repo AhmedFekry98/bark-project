@@ -12,7 +12,7 @@ class IgnoredRequest extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'provider_id',
         'service_request_id'
     ];
 
@@ -21,9 +21,9 @@ class IgnoredRequest extends Model
         return \Modules\Category\Database\factories\IgnoredRequestFactory::new();
     }
 
-    public function user(): BelongsTo
+    public function provider(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'provider_id');
     }
 
     public function serviceRequest(): BelongsTo

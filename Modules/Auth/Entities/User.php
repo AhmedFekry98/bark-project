@@ -76,7 +76,7 @@ class User extends Authenticatable implements HasMedia
 
     public function ignoredRequests(): HasMany
     {
-        return $this->hasMany(IgnoredRequest::class);
+        return $this->hasMany(IgnoredRequest::class, 'provider_id');
     }
 
     public function serviceRequestsSent(): HasMany
