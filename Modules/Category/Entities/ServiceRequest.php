@@ -16,12 +16,19 @@ class ServiceRequest extends Model
         'service_id',
         'city_id',
         'user_id',
-        'questions_data'
+        'questions_data',
+        'status'
     ];
 
     protected $casts = [
         'questions_data' => 'array',
 
+    ];
+
+    public static $statuses = ['pending', 'rejected', 'hired'];
+
+    protected $attributes = [
+        'status' => 'pending',
     ];
 
     protected static function newFactory()

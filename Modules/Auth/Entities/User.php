@@ -14,6 +14,7 @@ use Modules\Category\Entities\Category;
 use Modules\Category\Entities\IgnoredRequest;
 use Modules\Category\Entities\Service;
 use Modules\Category\Entities\ServiceRequest;
+use Modules\World\Entities\City;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -68,9 +69,9 @@ class User extends Authenticatable implements HasMedia
             :  false;
     }
 
-    public function service(): BelongsTo
+    public function city(): BelongsTo
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(City::class);
     }
 
     public function ignoredRequests(): HasMany

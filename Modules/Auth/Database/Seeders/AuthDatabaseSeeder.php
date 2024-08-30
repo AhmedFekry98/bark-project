@@ -43,6 +43,10 @@ class AuthDatabaseSeeder extends Seeder
             }
         }
 
+        User::factory(3)
+            ->create()
+            ->each(fn($customer) => $customer->assignRole('customer'));
+
         $this->call([
             ProfessionTableSeeder::class
         ]);

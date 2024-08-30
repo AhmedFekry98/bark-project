@@ -17,8 +17,7 @@ class SQService
     {
         try {
             $requests = self::$model::query()
-                // where city
-                //  where services
+                ->where('user_id', auth()->id())
                 ->get();
 
 
@@ -31,16 +30,17 @@ class SQService
     public function getLeadRequests()
     {
         try {
-
-
             $providerr = auth()->user();
 
             $ignoredIds = $providerr->ignoredRequests->pluck('id');
 
             $requests = self::$model::query()
-                // where city
-                //  where services
                 ->whereNotIn('id', $ignoredIds)
+                // ->where('city_id', $providerr->city_id)
+                ->whereHas(
+                    'service',
+                    fn($q) => $q->whereIn('profession_id', $providerr->professions->pluck('id'))
+                )
                 ->get();
 
 

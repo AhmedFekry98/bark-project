@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Modules\Category\Entities\ServiceRequest;
 
 return new class extends Migration
 {
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('hired_id')->nullable();
             $table->json('questions_data');
+            $table->enum('status', ServiceRequest::$statuses);
             $table->timestamps();
         });
     }

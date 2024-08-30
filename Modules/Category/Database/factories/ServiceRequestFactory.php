@@ -27,7 +27,6 @@ class ServiceRequestFactory extends Factory
 
         return [
             'service_id'     => $services->random()->id,
-            'city_id'        => 6609,
             'questions_data' => [
                 [
                     'questionId'    => 1,

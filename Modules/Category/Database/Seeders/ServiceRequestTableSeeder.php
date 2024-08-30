@@ -23,7 +23,8 @@ class ServiceRequestTableSeeder extends Seeder
 
         foreach ($customers as $customer) {
             ServiceRequest::factory(3)->create([
-                'user_id'   => $customer->id
+                'user_id'   => $customer->id,
+                'city_id'   => $customer->city_id,
             ]);
         }
     }

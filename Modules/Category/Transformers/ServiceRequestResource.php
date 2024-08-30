@@ -16,19 +16,21 @@ class ServiceRequestResource extends JsonResource
      */
     public function toArray($request)
     {
-        stiact:$isMasked = $this->customer->id != auth()->id();
+        stiact:
+        $isMasked = $this->customer->id != auth()->id();
 
         return [
             "id"                         => $this->id,
             "service_name"                => $this->service->profession->name,
             "status"                     => $this->status,
+            'questions_data'             => $this->questions_data,
             "created_at"                 => $this->created_at,
         ];
     }
 
     public function maskEmail(string $email)
     {
-        if (! static::$isMasked ) {
+        if (! static::$isMasked) {
             return $email;
         }
 
@@ -47,7 +49,7 @@ class ServiceRequestResource extends JsonResource
 
     public function maskPhone(string $phone)
     {
-        if (! static::$isMasked ) {
+        if (! static::$isMasked) {
             return $phone;
         }
 
