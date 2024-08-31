@@ -5,7 +5,7 @@ namespace Modules\Category\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Offer extends Model
+class Estimate extends Model
 {
     use HasFactory;
 

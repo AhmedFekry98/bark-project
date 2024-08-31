@@ -10,8 +10,8 @@ class Contact extends Model
     use HasFactory;
 
     protected $fillable = [
+        'service_request_id',
         'provider_id',
-        'customer_id',
     ];
 
     protected static function newFactory()

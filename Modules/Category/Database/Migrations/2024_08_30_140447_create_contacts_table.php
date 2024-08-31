@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('service_request_id');
             $table->unsignedInteger('provider_id');
-            $table->unsignedInteger('customer_id');
             $table->timestamps();
         });
     }

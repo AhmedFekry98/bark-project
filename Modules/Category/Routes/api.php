@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Category\Http\Controllers\CategoryController;
+use Modules\Category\Http\Controllers\ContactController;
 use Modules\Category\Http\Controllers\ProviderController;
 use Modules\Category\Http\Controllers\ServiceController;
 use Modules\Category\Http\Controllers\ServiceRequestController;
@@ -38,10 +39,22 @@ Route::group([
         Route::get('/requests/leads', [ServiceRequestController::class, 'indexLeads'])
             ->middleware(['auth:sanctum', "role:provider"]);
 
+
+        Route::get('/requests/contacts', [ServiceRequestController::class, 'indexContacts'])
+            ->middleware(['auth:sanctum', "role:provider"]);
+
+
         Route::post('/requests/create', [ServiceRequestController::class, 'store'])->middleware(['auth:sanctum'])
             ->middleware(['auth:sanctum', "role:customer"]);
 
-            Route::post('/requests/{id}/ignore', [ServiceRequestController::class, 'ignoreRequest'])->middleware(['auth:sanctum']);
+        Route::post('/requests/{id}/contact', [ServiceRequestController::class, 'contactRequest'])
+            ->middleware(['auth:sanctum', "role:provider"]);
+
+        Route::post('/requests/{id}/send-estimate', [ServiceRequestController::class, 'sendEstimate'])
+            ->middleware(['auth:sanctum', "role:provider"]);
+
+        Route::post('/requests/{id}/ignore', [ServiceRequestController::class, 'ignoreRequest'])
+            ->middleware(['auth:sanctum', 'role:provider']);
 
         //  deprcated now
         // Route::post('/requests/{id}/hire', [ServiceRequestController::class, 'hire'])->middleware(['auth:sanctum']);

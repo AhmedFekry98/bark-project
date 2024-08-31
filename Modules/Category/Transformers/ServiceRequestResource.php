@@ -21,7 +21,10 @@ class ServiceRequestResource extends JsonResource
 
         return [
             "id"                         => $this->id,
-            "service_name"                => $this->service->profession->name,
+            "service_name"               => $this->service->profession->name,
+            'customer_name'             =>  $this->customer->name,
+            'customer_phone'             =>  $this->customer->phone,
+            'customer_email'             =>  $this->customer->email,
             "status"                     => $this->status,
             'questions_data'             => $this->questions_data,
             "created_at"                 => $this->created_at,

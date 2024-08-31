@@ -5,6 +5,7 @@ namespace Modules\Category\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Auth\Entities\User;
 use Modules\World\Entities\City;
 
@@ -40,6 +41,7 @@ class ServiceRequest extends Model
     {
         return $this->belongsTo(Service::class);
     }
+
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
@@ -50,8 +52,18 @@ class ServiceRequest extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function provider(): BelongsTo
+    // public function provider(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class, 'hired_id');
+    // }
+
+    public function contacts(): HasMany
     {
-        return $this->belongsTo(User::class, 'hired_id');
+        return $this->hasMany(Contact::class);
+    }
+
+    public function estimates(): HasMany
+    {
+        return $this->hasMany(Estimate::class);
     }
 }

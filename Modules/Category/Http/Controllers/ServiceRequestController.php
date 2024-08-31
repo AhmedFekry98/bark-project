@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Category\Http\Requests\HireProviderRequest;
+use Modules\Category\Http\Requests\SendEstimateRequest;
 use Modules\Category\Http\Requests\StoreServiceRequest;
 use Modules\Category\Http\Requests\StoreSQRequest;
 use Modules\Category\Services\SQService;
@@ -57,6 +58,54 @@ class ServiceRequestController extends Controller
         return $this->okResponse(
             message: "Get all leads successfuly",
             data: LeadCollection::make($result->data)
+        );
+    }
+
+    public function indexContacts()
+    {
+        $result = $this->SQService->getContactRequests();
+
+        if ($result->isError()) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "Get contacts successfuly",
+            data: ServiceRequestResource::collection($result->data)
+        );
+    }
+
+    public function contactRequest(string $id)
+    {
+        $result = $this->SQService->contactRequest($id);
+
+        if ($result->isError()) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "Added Request to contacts successfuly",
+            data: $result->data
+        );
+    }
+
+    public function sendEstimate(string $id, SendEstimateRequest $request)
+    {
+        $result = $this->SQService->sendEstimate($id, TDOFacade::make($request));
+
+        if ($result->isError()) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "Send Estimate successfuly",
+            data: $result->data
         );
     }
 
