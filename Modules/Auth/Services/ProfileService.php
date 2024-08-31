@@ -48,18 +48,13 @@ class ProfileService
     {
         try {
             $data = $tdo->all(asSnake: true);
-            $user = Auth::user();
+            $user = auth()->user();
 
             $updateData = collect($data)
                 ->except(['image', 'professions'])
                 ->toArray();
 
 
-            // update extra data fields
-            $extra = $user->extra;
-            $updatedExtra = collect($data)->only(['address', 'location', 'open_time', 'close_time']);
-            foreach ($updatedExtra as $key => $value) $extra[$key] = $value;
-            $updateData['extra'] = $extra;
 
             $user->update($updateData);
 
@@ -69,13 +64,13 @@ class ProfileService
                     ->toMediaCollection('user');
             }
 
-            if ($role == 'provider' && $tdo->professions) {
-                $user->professions()->attach($tdo->professions);
+            if ($user->role == 'provider' && $tdo->professions) {
+                $user->professions()->sync($tdo->professions);
             }
 
-            $profile = self::$model::find($user->id);
+            $user = self::$model::find($user->id);
 
-            return Result::done($profile);
+            return Result::done($user);
         } catch (\Throwable $e) {
             return Result::error($e->getMessage());
         }
