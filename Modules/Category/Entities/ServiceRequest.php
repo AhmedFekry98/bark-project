@@ -26,7 +26,7 @@ class ServiceRequest extends Model
 
     ];
 
-    public static $statuses = ['pending', 'rejected', 'hired'];
+    public static $statuses = ['pending', 'rejected', 'hired', 'archive'];
 
     protected $attributes = [
         'status' => 'pending',

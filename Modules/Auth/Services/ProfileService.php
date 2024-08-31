@@ -51,7 +51,7 @@ class ProfileService
             $user = Auth::user();
 
             $updateData = collect($data)
-                ->except(['image', 'address', 'location', 'socialmedia_links', 'restaurant_name'])
+                ->except(['image', 'professions'])
                 ->toArray();
 
 
@@ -69,27 +69,8 @@ class ProfileService
                     ->toMediaCollection('user');
             }
 
-            // update restaurant raw data
-            if ($user->role == 'restaurant') {
-                $restauData = collect($data)
-                    ->only(['restaurant_name', 'oopen_time', 'close_time'])
-                    ->toArray();
-
-                $user->restaurant->update($restauData);
-            }
-
-            // update restaurant caver.
-            if ($user->role == 'restaurant' && $tdo->restaurantImage) {
-                $user->restaurant->addMedia($tdo->restaurantImage)
-                    ->toMediaCollection('restaurant-caver');
-            }
-
-            // update socialmedia links
-            if ($user->role == 'restaurant' && $tdo->socialmediaLinks) {
-                $links = $user->restaurant->socialmedia_links;
-                foreach ($data['socialmedia_links'] as $key => $value) $links[$key] = $value;
-                $user->restaurant->socialmedia_links = $links;
-                $user->restaurant->save();
+            if ($role == 'provider' && $tdo->professions) {
+                $user->professions()->attach($tdo->professions);
             }
 
             $profile = self::$model::find($user->id);
