@@ -22,16 +22,14 @@ class QuestionFactory extends Factory
     public function definition()
     {
         $type       = $this->faker->randomElement(Question::$types);
-        $details    = null;
+        $options    = null;
 
 
         if (in_array($type, ['radio', 'checkbox'])) {
-            $details = [
-                'items' => [
-                    'item 1',
-                    'item 2',
-                    'item 3'
-                ]
+            $options = [
+                'item 1',
+                'item 2',
+                'item 3'
             ];
         }
 
@@ -39,8 +37,7 @@ class QuestionFactory extends Factory
             'question_text'     => $this->faker->unique()->words(asText: true),
             'question_note'     => $this->faker->unique()->words(asText: true),
             'type'              => $type,
-            'details'           => $details,
+            'options'           => $options,
         ];
     }
 }
-
