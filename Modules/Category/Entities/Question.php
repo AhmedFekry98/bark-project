@@ -13,7 +13,7 @@ class Question extends Model
         'question_text',
         'question_note',
         'type',
-        'details',
+        'options',
     ];
 
     public static $types = [

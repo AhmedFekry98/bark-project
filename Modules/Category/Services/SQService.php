@@ -7,6 +7,9 @@ use Graphicode\Standard\TDO\TDO;
 use Modules\Auth\Entities\User;
 use Modules\Category\Entities\Category;
 use Modules\Category\Entities\ServiceRequest;
+use Modules\Category\Filters\StatusFilter;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class SQService
 {
@@ -55,7 +58,10 @@ class SQService
         try {
             $provider = auth()->user();
 
-            $requests = self::$model::query()
+            $requests = QueryBuilder::for(self::$model)
+                ->allowedFilters([
+                    AllowedFilter::custom('status', new StatusFilter),
+                ])
                 ->whereHas('contacts', function ($q) use ($provider) {
                     $q->where('provider_id', $provider->id);
                 })
@@ -105,9 +111,9 @@ class SQService
                 ->where('provider_id', $provider->id)
                 ->count();
 
-                if (! $canBeSend ) {
-                    return Result::error("Service request not in your contacts");
-                }
+            if (! $canBeSend) {
+                return Result::error("Service request not in your contacts");
+            }
 
             $isAlreadySent = $serviceRequest->estimates()
                 ->where('provider_id', $provider->id)

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('question_text');
             $table->string('question_note')->nullable();
             $table->enum('type', Question::$types);
-            $table->json('details')->nullable();
+            $table->json('options')->nullable();
             $table->timestamps();
         });
     }
