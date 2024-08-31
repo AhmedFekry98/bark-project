@@ -23,7 +23,7 @@ class Question extends Model
     ];
 
     protected $casts = [
-        'details'  => 'array'
+        'options'  => 'array'
     ];
 
     protected static function newFactory()
