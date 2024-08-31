@@ -34,7 +34,7 @@ Route::group([
 
         // START OF REQUESTS GROUP ??
         Route::get('/requests', [ServiceRequestController::class, 'index'])
-            ->middleware(['auth:sanctum', "role:customer"]);
+            ->middleware(['auth:sanctum', "role:customer,admin"]);
 
         Route::get('/requests/leads', [ServiceRequestController::class, 'indexLeads'])
             ->middleware(['auth:sanctum', "role:provider"]);

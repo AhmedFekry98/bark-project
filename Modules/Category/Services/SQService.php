@@ -19,9 +19,14 @@ class SQService
     public function getRequests()
     {
         try {
-            $requests = self::$model::query()
-                ->where('user_id', auth()->id())
-                ->get();
+            $user = auth()->user();
+            $query = self::$model::query();
+
+            if ($user->role != 'admin') {
+                $query->where('user_id', $user->id);
+            }
+
+            $requests = $query->get();
 
 
             return Result::done($requests);
@@ -38,12 +43,18 @@ class SQService
             $ignoredIds = $providerr->ignoredRequests->pluck('id');
 
             $requests = self::$model::query()
-                ->whereNotIn('id', $ignoredIds)
-                // ->where('city_id', $providerr->city_id)
+                // check if in professions.
                 ->whereHas(
                     'service',
                     fn($q) => $q->whereIn('profession_id', $providerr->professions->pluck('id'))
                 )
+                // check if not does'nt have contacts.
+                ->whereDoesntHave(
+                    'contacts'
+
+                )
+                // check if not ignored.
+                ->whereNotIn('id', $ignoredIds)
                 ->get();
 
 
