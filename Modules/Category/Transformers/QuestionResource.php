@@ -19,7 +19,7 @@ class QuestionResource extends JsonResource
             'question_text'     => $this->question_text,
             'question_note'     => $this->question_note,
             'type'              => $this->type,
-            'details'           => $this->details,
+            'options'           => $this->options,
         ];
     }
 }

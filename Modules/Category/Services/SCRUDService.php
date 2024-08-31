@@ -110,6 +110,21 @@ class SCRUDService
                     ->toMediaCollection('image');
             }
 
+            // re-create questions.
+            if ($tdo->questions) {
+                $questions = collect($tdo->questions)
+                    ->map(function ($question) {
+                        $question['question_text']  = $question['questionText'];
+                        $question['question_note']  = $question['questionNote'];
+                        return $question;
+                    })->toArray();
+
+                $service->questions()->delete(); // delete old questions.
+                // create new questions.
+                $service->questions()
+                    ->createMany($questions);
+            }
+
             // get last version of category.
             $service = self::$model::find($serviceId);
 
