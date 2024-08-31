@@ -26,7 +26,7 @@ class StoreServiceRequest extends FormRequest
             "questions.*.questionText"   => ['required', 'string', 'min:1', 'max:200'],
             "questions.*.questionNote"   => ['nullable', 'string', 'min:1', 'max:200'],
             "questions.*.type"              => ['required', 'string', "in:$types"],
-            "questions.*.details"   => ['nullable', 'array'],
+            "questions.*.options"   => ['nullable', 'array'],
         ];
     }
 

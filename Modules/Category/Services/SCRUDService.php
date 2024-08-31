@@ -120,6 +120,7 @@ class SCRUDService
                     })->toArray();
 
                 $service->questions()->delete(); // delete old questions.
+
                 // create new questions.
                 $service->questions()
                     ->createMany($questions);
