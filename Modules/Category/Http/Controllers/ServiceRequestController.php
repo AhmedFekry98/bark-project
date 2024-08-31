@@ -7,8 +7,10 @@ use Graphicode\Standard\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Category\Entities\ServiceRequest;
 use Modules\Category\Http\Requests\HireProviderRequest;
 use Modules\Category\Http\Requests\SendEstimateRequest;
+use Modules\Category\Http\Requests\StatusRequest;
 use Modules\Category\Http\Requests\StoreServiceRequest;
 use Modules\Category\Http\Requests\StoreSQRequest;
 use Modules\Category\Services\SQService;
@@ -147,9 +149,9 @@ class ServiceRequestController extends Controller
         );
     }
 
-    public function hire(string $serviceRequestId, HireProviderRequest $request)
+    public function status(string $serviceRequestId, StatusRequest $request)
     {
-        $result = $this->SQService->hireProvider($serviceRequestId, TDOFacade::make($request));
+        $result = $this->SQService->updateStatus($serviceRequestId, TDOFacade::make($request));
 
         if ($result->isError()) {
             return $this->badResponse(
@@ -158,8 +160,8 @@ class ServiceRequestController extends Controller
         }
 
         return $this->okResponse(
-            message: "hired a provider successfuly",
-            data: ProviderResource::make($result->data)
+            message: "Update request status successfuly",
+            data: ServiceRequestResource::make($result->data)
         );
     }
 

@@ -4,7 +4,7 @@ namespace Modules\Category\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class HireProviderRequest extends FormRequest
+class StatusRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class HireProviderRequest extends FormRequest
     public function rules()
     {
         return [
-            'hiredId'   => ['required', 'integer', 'exists:users,id']
+            'status'   => ['required', 'string', 'in:hired'],
         ];
     }
 

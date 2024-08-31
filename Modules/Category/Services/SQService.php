@@ -172,7 +172,7 @@ class SQService
         }
     }
 
-    public function hireProvider(string $serviceRequestId, TDO $tdo)
+    public function updateStatus(string $serviceRequestId, TDO $tdo)
     {
         try {
             $serviceRequest = ServiceRequest::find($serviceRequestId);
@@ -181,12 +181,12 @@ class SQService
                 return Result::error("No service request with id '$serviceRequestId'");
             }
 
-            $serviceRequest->hired_id = $tdo->hiredId;
+            $serviceRequest->status = $tdo->status;
             $serviceRequest->save();
 
 
 
-            return Result::done($serviceRequest->provider);
+            return Result::done($serviceRequest);
         } catch (\Exception $e) {
             return Result::error($e->getMessage());
         }

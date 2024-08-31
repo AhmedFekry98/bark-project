@@ -56,8 +56,10 @@ Route::group([
         Route::post('/requests/{id}/ignore', [ServiceRequestController::class, 'ignoreRequest'])
             ->middleware(['auth:sanctum', 'role:provider']);
 
+        Route::post('/requests/{id}/status', [ServiceRequestController::class, 'status'])
+            ->middleware(['auth:sanctum', 'role:provider']);
+
         //  deprcated now
-        // Route::post('/requests/{id}/hire', [ServiceRequestController::class, 'hire'])->middleware(['auth:sanctum']);
         // Route::get('/requests/{id}/providers', [ProviderController::class, 'categoryProviders']);
 
         Route::get('/{id}', [ServiceController::class, 'show']);
