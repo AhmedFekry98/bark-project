@@ -15,6 +15,7 @@ use Modules\Category\Services\SQService;
 use Modules\Category\Transformers\LeadCollection;
 use Modules\Category\Transformers\LeadServiceRequestResource;
 use Modules\Category\Transformers\ProviderResource;
+use Modules\Category\Transformers\ServiceRequestCollection;
 use Modules\Category\Transformers\ServiceRequestResource;
 
 class ServiceRequestController extends Controller
@@ -73,7 +74,7 @@ class ServiceRequestController extends Controller
 
         return $this->okResponse(
             message: "Get contacts successfuly",
-            data: ServiceRequestResource::collection($result->data)
+            data: ServiceRequestCollection::make($result->data)
         );
     }
 

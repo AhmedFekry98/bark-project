@@ -14,6 +14,10 @@ class ServiceRequestCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'count' => $this->collection->count(),
+            'updated_at' => $this->collection->last()?->updated_at->diffForHumans(),
+            'items' => ServiceRequestResource::collection($this->collection)
+        ];
     }
 }
