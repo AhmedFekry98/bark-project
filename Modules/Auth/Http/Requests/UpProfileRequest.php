@@ -25,7 +25,7 @@ class UpProfileRequest extends FormRequest
             ],
 
             $role == 'provider' ? [
-                "professions"       =>  ['nullable', 'integer', 'exists:professions,id'],
+                "professions"       =>  ['nullable', 'array', 'exists:professions,id'],
                 'companyName'       => ['nullable', 'string'],
                 'companyWebsite'    => ['nullable', 'url'],
                 'companySize'       => ['nullable', 'string'],
