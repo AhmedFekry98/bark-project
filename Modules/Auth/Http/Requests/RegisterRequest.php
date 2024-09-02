@@ -23,6 +23,7 @@ class RegisterRequest extends FormRequest
                 'email'             => ['required', 'email', 'min:5', 'max:100', 'unique:users,email'],
                 'password'          => ['required', 'string', 'min:6', 'max:16'],
                 'cityId'            => ['required', 'integer', 'exists:cities,id'],
+                'zipCode'           => ['required', 'string', 'min:1', 'max:10'],
             ],
 
             $role == 'provider' ? [

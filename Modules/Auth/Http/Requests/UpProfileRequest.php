@@ -22,6 +22,7 @@ class UpProfileRequest extends FormRequest
                 'email'             => ['nullable', 'email', 'min:5', 'max:100', 'unique:users,email'],
                 'password'          => ['nullable', 'string', 'min:6', 'max:16'],
                 'cityId'            => ['nullable', 'integer', 'exists:cities,id'],
+                'zipCode'           => ['nullable', 'string', 'min:1', 'max:10'],
             ],
 
             $role == 'provider' ? [

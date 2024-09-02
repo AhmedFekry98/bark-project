@@ -44,7 +44,9 @@ class AuthDatabaseSeeder extends Seeder
         }
 
         User::factory(3)
-            ->create()
+            ->create([
+                'zip_code' => '1100110',
+            ])
             ->each(fn($customer) => $customer->assignRole('customer'));
 
         $this->call([

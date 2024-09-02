@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('password');
             $table->unsignedInteger('city_id');
+            $table->string('zip_code')->default("");
             $table->string('company_name')->nullable();
             $table->string('company_website')->nullable();
             $table->string('company_size')->nullable();
