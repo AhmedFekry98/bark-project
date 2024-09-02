@@ -1,5 +1,6 @@
 {
     "Auth": true,
     "Category": true,
-    "World": true
+    "World": true,
+    "Contact": true
 }
