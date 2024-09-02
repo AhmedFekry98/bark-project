@@ -17,8 +17,9 @@ class StoreServiceRequest extends FormRequest
         $types = implode(',', Question::$types);
 
         return [
-            "categoryId"    => ['required', 'integer', 'exists:categories,id'],
-            "professionId"          => ['required', 'integer', 'exists:professions,id'],
+            "categoryId"        => ['required', 'integer', 'exists:categories,id'],
+            'professionName'    => ['required_without:professionId', 'string', 'min:1', 'max:200'],
+            "professionId"      => ['required_without:professionName', 'integer', 'exists:professions,id'],
             "image"         => ['required', 'image', 'max:4096'],
 
             // questions rules.

@@ -4,6 +4,7 @@ namespace Modules\Category\Services;
 
 use App\ErrorHandlling\Result;
 use Graphicode\Standard\TDO\TDO;
+use Modules\Auth\Entities\Profession;
 use Modules\Category\Entities\Category;
 use Modules\Category\Entities\Service;
 use Modules\Category\Filters\CityIdFilter;
@@ -42,8 +43,15 @@ class SCRUDService
             $creationData = collect(
                 $tdo->all(asSnake: true)
             )->except([
-                'questions'
+                'questions',
+                'professionName',
             ])->toArray();
+
+            // create profession if not sent the id
+            if ( !isset($creationData['profession_id']) && $tdo->professionName ) {
+                $profession = Profession::create(['name' => $tdo->professionName]);
+                $creationData['profession_id'] = $profession->id;
+            }
 
             $service = self::$model::create($creationData);
 
@@ -98,8 +106,15 @@ class SCRUDService
             $updateData = collect(
                 $tdo->all(asSnake: true)
             )->except([
-                'questions'
+                'questions',
+                'professionName'
             ])->toArray();
+
+            // create profession if not sent the id
+            if ( !isset($creationData['profession_id']) && $tdo->professionName ) {
+                $profession = Profession::create(['name' => $tdo->professionName]);
+                $updateData['profession_id'] = $profession->id;
+            }
 
             $service->update($updateData);
 
