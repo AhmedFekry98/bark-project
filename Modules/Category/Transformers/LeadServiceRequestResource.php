@@ -25,6 +25,7 @@ class LeadServiceRequestResource extends JsonResource
             'customer_phone'            => $this->maskPhone($this->customer->phone),
             'customer_location'         => $this->city->name,
             'customer_zip_code'         => $this->customer->zip_code,
+            'has_contacts' => (bool) $this->contacts_count,
             "questions_data"             => $this->questions_data,
             "created_at"                 => $this->created_at->diffForHumans(),
         ];

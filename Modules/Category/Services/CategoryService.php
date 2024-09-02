@@ -15,6 +15,7 @@ class CategoryService
     {
         try {
             $categories = self::$model::query()
+            ->latest()
                 ->with('services', function ($q) {
                     $q->latest()
                         ->limit(3);

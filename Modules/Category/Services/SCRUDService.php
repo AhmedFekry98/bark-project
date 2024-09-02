@@ -4,6 +4,7 @@ namespace Modules\Category\Services;
 
 use App\ErrorHandlling\Result;
 use Graphicode\Standard\TDO\TDO;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Modules\Auth\Entities\Profession;
 use Modules\Category\Entities\Category;
 use Modules\Category\Entities\Service;
@@ -16,6 +17,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 class SCRUDService
 {
     public static $model = Service::class;
+
 
 
     public function getServices()
@@ -48,7 +50,7 @@ class SCRUDService
             ])->toArray();
 
             // create profession if not sent the id
-            if ( !isset($creationData['profession_id']) && $tdo->professionName ) {
+            if (!isset($creationData['profession_id']) && $tdo->professionName) {
                 $profession = Profession::create(['name' => $tdo->professionName]);
                 $creationData['profession_id'] = $profession->id;
             }
@@ -111,7 +113,7 @@ class SCRUDService
             ])->toArray();
 
             // create profession if not sent the id
-            if ( !isset($creationData['profession_id']) && $tdo->professionName ) {
+            if (!isset($creationData['profession_id']) && $tdo->professionName) {
                 $profession = Profession::create(['name' => $tdo->professionName]);
                 $updateData['profession_id'] = $profession->id;
             }

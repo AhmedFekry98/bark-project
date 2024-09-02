@@ -4,6 +4,7 @@ namespace Modules\Category\Services;
 
 use App\ErrorHandlling\Result;
 use Graphicode\Standard\TDO\TDO;
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Auth\Entities\User;
 use Modules\Category\Entities\Category;
 use Modules\Category\Entities\ServiceRequest;
@@ -15,12 +16,24 @@ class SQService
 {
     public static $model = ServiceRequest::class;
 
+    public static function query(): Builder
+    {
+        $user =auth()->user();
+
+        return self::$model::query()
+            ->latest()
+            ->when(
+                $user->role != 'admin',
+                fn($q) => $q->where('created_at', '>', now()->subDays(6))
+            );
+    }
+
 
     public function getRequests()
     {
         try {
             $user = auth()->user();
-            $query = self::$model::query();
+            $query = self::query();
 
             if ($user->role != 'admin') {
                 $query->where('user_id', $user->id);
@@ -42,16 +55,12 @@ class SQService
 
             $ignoredIds = $providerr->ignoredRequests->pluck('id');
 
-            $requests = self::$model::query()
+            $requests = self::query()
+                ->withCount('contacts')
                 // check if in professions.
                 ->whereHas(
                     'service',
                     fn($q) => $q->whereIn('profession_id', $providerr->professions->pluck('id'))
-                )
-                // check if not does'nt have contacts.
-                ->whereDoesntHave(
-                    'contacts'
-
                 )
                 // check if not ignored.
                 ->whereNotIn('id', $ignoredIds)
@@ -69,7 +78,7 @@ class SQService
         try {
             $provider = auth()->user();
 
-            $requests = QueryBuilder::for(self::$model)
+            $requests = QueryBuilder::for(self::query())
                 ->allowedFilters([
                     AllowedFilter::custom('status', new StatusFilter),
                 ])
