@@ -14,7 +14,7 @@ class StatusRequest extends FormRequest
     public function rules()
     {
         return [
-            'status'   => ['required', 'string', 'in:hired,archive'],
+            'status'   => ['required', 'string', 'in:pending,hired,archive'],
         ];
     }
 

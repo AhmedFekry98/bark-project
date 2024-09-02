@@ -26,6 +26,7 @@ class ServiceRequestResource extends JsonResource
             'customer_phone'             =>  $this->customer->phone,
             'customer_email'             =>  $this->customer->email,
             'customer_location'             =>  $this->customer->city->name,
+            'customer_zip_code'         => $this->customer->zip_code,
             "status"                     => $this->status,
             'questions_data'             => $this->questions_data,
             "created_at"                 => $this->created_at->diffForHumans(),
