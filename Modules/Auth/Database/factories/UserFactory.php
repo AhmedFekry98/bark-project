@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'email'      => $this->faker->safeEmail(),
             'password'   => Hash::make('password'),
             'verified_at'       => $this->faker->randomElement([now(), null]),
+            'zip_code' => '1100110',
         ];
     }
 }
