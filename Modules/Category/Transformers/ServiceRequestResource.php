@@ -29,6 +29,7 @@ class ServiceRequestResource extends JsonResource
             'customer_zip_code'         => $this->customer->zip_code,
             "status"                     => $this->status,
             'questions_data'             => $this->questions_data,
+            'estimates'                  => ProviderEstimateResource::collection($this->estimates),
             "created_at"                 => $this->created_at->diffForHumans(),
             "updated_at"                 => $this->updated_at->diffForHumans(),
         ];
