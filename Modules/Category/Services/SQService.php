@@ -131,9 +131,9 @@ class SQService
                 ->where('provider_id', $provider->id)
                 ->count();
 
-            if (! $canBeSend) {
-                return Result::error("Service request not in your contacts");
-            }
+            // if (! $canBeSend) {
+            //     return Result::error("Service request not in your contacts");
+            // }
 
             $isAlreadySent = $serviceRequest->estimates()
                 ->where('provider_id', $provider->id)
