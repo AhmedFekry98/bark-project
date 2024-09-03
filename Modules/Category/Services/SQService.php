@@ -131,17 +131,17 @@ class SQService
                 ->where('provider_id', $provider->id)
                 ->count();
 
-            // if (! $canBeSend) {
-            //     return Result::error("Service request not in your contacts");
-            // }
+            if (! $canBeSend) {
+                return Result::error("Service request not in your contacts");
+            }
 
             $isAlreadySent = $serviceRequest->estimates()
                 ->where('provider_id', $provider->id)
                 ->count();
 
-            if ($isAlreadySent > 0) {
-                return Result::error("Estimate already sent");
-            }
+            // if ($isAlreadySent > 0) {
+            //     return Result::error("Estimate already sent");
+            // }
 
             $estimateData  = $tdo->all(asSnake: true);
             $estimateData['provider_id'] = $provider->id;
