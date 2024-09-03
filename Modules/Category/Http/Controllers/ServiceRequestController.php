@@ -172,7 +172,18 @@ class ServiceRequestController extends Controller
      */
     public function show($id)
     {
-        //
+        $result = $this->SQService->getRequestById($id);
+
+        if ( $result->isError() ) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "Get request dat successfuly",
+            data: ServiceRequestResource::make($result->data)
+        );
     }
 
     /**

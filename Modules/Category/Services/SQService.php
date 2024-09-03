@@ -18,7 +18,7 @@ class SQService
 
     public static function query(): Builder
     {
-        $user =auth()->user();
+        $user = auth()->user();
 
         return self::$model::query()
             ->latest()
@@ -172,6 +172,25 @@ class SQService
 
 
             return Result::done(true);
+        } catch (\Exception $e) {
+            return Result::error($e->getMessage());
+        }
+    }
+
+    public function getRequestById(string $serviceRequestId)
+    {
+        try {
+            $serviceRequest = ServiceRequest::query()
+                ->with("estimates")
+                ->find($serviceRequestId);
+
+            if (! $serviceRequest) {
+                return Result::error("No service request with id '$serviceRequestId'");
+            }
+
+
+
+            return Result::done($serviceRequest);
         } catch (\Exception $e) {
             return Result::error($e->getMessage());
         }

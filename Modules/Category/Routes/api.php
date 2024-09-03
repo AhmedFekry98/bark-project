@@ -53,6 +53,9 @@ Route::group([
         Route::post('/requests/{id}/send-estimate', [ServiceRequestController::class, 'sendEstimate'])
             ->middleware(['auth:sanctum', "role:provider"]);
 
+        Route::get('/requests/{id}', [ServiceRequestController::class, 'show'])
+            ->middleware(['auth:sanctum']);
+
         Route::post('/requests/{id}/ignore', [ServiceRequestController::class, 'ignoreRequest'])
             ->middleware(['auth:sanctum', 'role:provider']);
 
