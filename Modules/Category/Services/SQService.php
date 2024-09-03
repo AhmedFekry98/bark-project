@@ -181,7 +181,7 @@ class SQService
     {
         try {
             $serviceRequest = ServiceRequest::query()
-                ->with("estimates")
+                ->with("estimates", fn ($q) => $q->latest() )
                 ->find($serviceRequestId);
 
             if (! $serviceRequest) {

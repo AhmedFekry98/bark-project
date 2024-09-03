@@ -18,6 +18,7 @@ class ProviderEstimateResource extends JsonResource
             "id"                => $this->id,
             "provider_id"     => $this->provider->id,
             "provider_name"     => $this->provider->name,
+            "provider_image"    => $this->getFirstMediaUrl('user'),
             "price"             => $this->price,
             "estimated_time"    => $this->estimated_time,
             "addational_notes"  => $this->addational_notes,
