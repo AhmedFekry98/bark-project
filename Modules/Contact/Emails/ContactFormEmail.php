@@ -6,8 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
 
-class ContactFormMail extends Mailable
+class ContactFormEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,7 +18,7 @@ class ContactFormMail extends Mailable
      * @return void
      */
     public function __construct(
-        private Contact $contact
+        private Request $request
     ) {}
 
     /**
@@ -27,6 +28,8 @@ class ContactFormMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('emails.contact-form', [
+            'request'   => $this->request,
+        ]);
     }
 }

@@ -26,7 +26,10 @@ class SQService
             ->when(
                 $user->role != 'admin',
                 fn($q) => $q->where('created_at', '>', now()->subDays(6))
-            );
+            )->with('estimates', function ($q) {
+                $q->latest()
+                    ->whereStatus('pending');
+            });
     }
 
 
@@ -65,6 +68,7 @@ class SQService
                 )
                 // check if not ignored.
                 ->whereNotIn('id', $ignoredIds)
+                ->whereDoesntHave('estimates', fn($q) => $q->whereStatus('accepted'))
                 ->get();
 
 
@@ -181,8 +185,7 @@ class SQService
     public function getRequestById(string $serviceRequestId)
     {
         try {
-            $serviceRequest = ServiceRequest::query()
-                ->with("estimates", fn ($q) => $q->latest() )
+            $serviceRequest = self::query()
                 ->find($serviceRequestId);
 
             if (! $serviceRequest) {
@@ -237,7 +240,7 @@ class SQService
         try {
             $estimate = Estimate::find($estimateId);
 
-            if (! $estimate ) {
+            if (! $estimate) {
                 return Result::error("No estimate with id '$estimateId'");
             }
 
