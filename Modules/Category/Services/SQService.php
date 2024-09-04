@@ -7,6 +7,7 @@ use Graphicode\Standard\TDO\TDO;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Auth\Entities\User;
 use Modules\Category\Entities\Category;
+use Modules\Category\Entities\Estimate;
 use Modules\Category\Entities\ServiceRequest;
 use Modules\Category\Filters\StatusFilter;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -139,9 +140,9 @@ class SQService
                 ->where('provider_id', $provider->id)
                 ->count();
 
-            // if ($isAlreadySent > 0) {
-            //     return Result::error("Estimate already sent");
-            // }
+            if ($isAlreadySent > 0) {
+                return Result::error("Estimate already sent");
+            }
 
             $estimateData  = $tdo->all(asSnake: true);
             $estimateData['provider_id'] = $provider->id;
@@ -226,6 +227,26 @@ class SQService
 
 
             return Result::done($serviceRequest);
+        } catch (\Exception $e) {
+            return Result::error($e->getMessage());
+        }
+    }
+
+    public function updateEstimateStatus(string $estimateId, TDO $tdo)
+    {
+        try {
+            $estimate = Estimate::find($estimateId);
+
+            if (! $estimate ) {
+                return Result::error("No estimate with id '$estimateId'");
+            }
+
+            $estimate->status = $tdo->status;
+            $estimate->save();
+
+
+
+            return Result::done($estimate);
         } catch (\Exception $e) {
             return Result::error($e->getMessage());
         }

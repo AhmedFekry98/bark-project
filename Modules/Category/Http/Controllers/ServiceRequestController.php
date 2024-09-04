@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Category\Entities\ServiceRequest;
+use Modules\Category\Http\Requests\EstimateStatusRequest;
 use Modules\Category\Http\Requests\HireProviderRequest;
 use Modules\Category\Http\Requests\SendEstimateRequest;
 use Modules\Category\Http\Requests\StatusRequest;
@@ -16,6 +17,7 @@ use Modules\Category\Http\Requests\StoreSQRequest;
 use Modules\Category\Services\SQService;
 use Modules\Category\Transformers\LeadCollection;
 use Modules\Category\Transformers\LeadServiceRequestResource;
+use Modules\Category\Transformers\ProviderEstimateResource;
 use Modules\Category\Transformers\ProviderResource;
 use Modules\Category\Transformers\ServiceRequestCollection;
 use Modules\Category\Transformers\ServiceRequestResource;
@@ -162,6 +164,22 @@ class ServiceRequestController extends Controller
         return $this->okResponse(
             message: "Update request status successfuly",
             data: ServiceRequestResource::make($result->data)
+        );
+    }
+
+    public function estimateStatus(string $estimateId, EstimateStatusRequest $request)
+    {
+        $result = $this->SQService->updateEstimateStatus($estimateId, TDOFacade::make($request));
+
+        if ($result->isError()) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "Update request status successfuly",
+            data: ProviderEstimateResource::make($result->data)
         );
     }
 

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Modules\Category\Entities\Estimate;
 
 return new class extends Migration
 {
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->float('price');
             $table->string('estimated_time');
             $table->text('addational_notes');
+            $table->enum('status', ['pending', ...Estimate::$statuses])->default('pending');
             $table->timestamps();
         });
     }

@@ -62,6 +62,9 @@ Route::group([
         Route::post('/requests/{id}/status', [ServiceRequestController::class, 'status'])
             ->middleware(['auth:sanctum', 'role:provider']);
 
+        Route::post('/requests/estimates/{id}/status', [ServiceRequestController::class, 'estimateStatus'])
+            ->middleware(['auth:sanctum', 'role:customer']);
+
         //  deprcated now
         // Route::get('/requests/{id}/providers', [ProviderController::class, 'categoryProviders']);
 

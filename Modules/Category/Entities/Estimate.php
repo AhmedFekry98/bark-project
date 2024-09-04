@@ -19,6 +19,11 @@ class Estimate extends Model
         'addational_notes',
     ];
 
+    public static $statuses = [
+        'accepted',
+        'rejected',
+    ];
+
     protected static function newFactory()
     {
         return \Modules\Category\Database\factories\OfferFactory::new();

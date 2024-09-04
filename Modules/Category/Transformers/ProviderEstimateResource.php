@@ -22,6 +22,7 @@ class ProviderEstimateResource extends JsonResource
             "price"             => $this->price,
             "estimated_time"    => $this->estimated_time,
             "addational_notes"  => $this->addational_notes,
+            "status"            =>  $this->status,
             "created_at"         => $this->created_at->diffForHumans(),
         ];
     }
