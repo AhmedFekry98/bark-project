@@ -6,6 +6,8 @@ use Graphicode\Standard\Traits\ApiResponses;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
+use Modules\Contact\Emails\ContactFormEmail;
 use Modules\Contact\Http\Requests\StoreContactRequest;
 
 class ContactController extends Controller
@@ -18,7 +20,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('contact::index');
+        //
     }
 
     /**
@@ -37,6 +39,11 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request)
     {
+        $toEmail = config('settings.support_email');
+
+        Mail::to($toEmail)
+            ->send(new ContactFormEmail($request));
+
         return $this->okResponse(
             message: "Message sent successfuly",
             data: true
