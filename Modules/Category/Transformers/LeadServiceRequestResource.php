@@ -26,7 +26,9 @@ class LeadServiceRequestResource extends JsonResource
             'customer_location'         => $this->city->name,
             'customer_zip_code'         => $this->customer->zip_code,
             "questions_data"             => $this->questions_data,
-            'has_contacts' => (bool) $this->contacts_count,
+            'isHired'                   =>   $this->_hired_id? true: false,
+            'has_contacts'               =>  $this->contacts_count > 5,
+            'contacts_count'            =>  $this->contacts_count,
             'estimates'                  => ProviderEstimateResource::collection($this->estimates),
             "created_at"                 => $this->created_at->diffForHumans(),
         ];

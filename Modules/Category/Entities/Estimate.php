@@ -29,6 +29,11 @@ class Estimate extends Model
         return \Modules\Category\Database\factories\OfferFactory::new();
     }
 
+    public function request(): BelongsTo
+    {
+        return $this->belongsTo(ServiceRequest::class, 'service_request_id');
+    }
+
     public function provider(): BelongsTo
     {
         return $this->belongsTo(User::class, 'provider_id');

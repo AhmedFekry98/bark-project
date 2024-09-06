@@ -5,7 +5,9 @@ namespace Modules\Category\Services;
 use App\ErrorHandlling\Result;
 use Graphicode\Standard\TDO\TDO;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Mail;
 use Modules\Auth\Entities\User;
+use Modules\Category\Emails\EstimateEmail;
 use Modules\Category\Entities\Category;
 use Modules\Category\Entities\Estimate;
 use Modules\Category\Entities\ServiceRequest;
@@ -108,12 +110,19 @@ class SQService
                 return Result::error("No service request with id '$serviceRequestId'");
             }
 
+            if (auth()->user()->role != 'provider') {
+                return Result::error('You are not a provider user');
+            }
+
             $provider = auth()->user();
+
+            // more logic here?
+            // step 1: check  has due credits
+            // step 2 : increment credits and make transaction by it.
 
             $serviceRequest->contacts()->create([
                 'provider_id'    => $provider->id
             ]);
-
 
             return Result::done(true);
         } catch (\Exception $e) {
@@ -148,10 +157,14 @@ class SQService
                 return Result::error("Estimate already sent");
             }
 
+
             $estimateData  = $tdo->all(asSnake: true);
             $estimateData['provider_id'] = $provider->id;
+            $estimate = $serviceRequest->estimates()->create($estimateData);
 
-            $serviceRequest->estimates()->create($estimateData);
+            $customerEmail = $serviceRequest->customer->email;
+            Mail::to($customerEmail)
+                ->send(new EstimateEmail($estimate));
 
 
             return Result::done(true);
@@ -224,6 +237,10 @@ class SQService
                 return Result::error("No service request with id '$serviceRequestId'");
             }
 
+            if ($serviceRequest->customer->id) {
+                return Result::error("Canot be update status for this service request");
+            }
+
             $serviceRequest->status = $tdo->status;
             $serviceRequest->save();
 
@@ -244,8 +261,28 @@ class SQService
                 return Result::error("No estimate with id '$estimateId'");
             }
 
+            if (auth()->id() != $estimate->request->customer->id) {
+                return Result::error("You not have a permisson to update the status for this estimate");
+            }
+
+
             $estimate->status = $tdo->status;
             $estimate->save();
+
+
+            if ($tdo->status == 'accepted') {
+                $estimate->request->update([
+                    'status'    => 'hired',
+                    'hired_id'  => $estimate->provider_id
+                ]);
+
+                $estimate->request->estimates()
+                ->whereNot('id', $estimate->id)
+                ->update([
+                    'status' => 'rejected'
+                ]);
+            }
+
 
 
 
