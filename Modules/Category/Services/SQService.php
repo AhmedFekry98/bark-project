@@ -153,8 +153,16 @@ class SQService
                 ->where('provider_id', $provider->id)
                 ->count();
 
-            if ($isAlreadySent > 0) {
+            if ($isAlreadySent) {
                 return Result::error("Estimate already sent");
+            }
+
+            if ($serviceRequest->acceptedEstimate) {
+                return Result::error("This Request has accepted estimate");
+            }
+
+            if ($serviceRequest->estimates()->count() >= 5) {
+                return  Result::error("This request has already 5 estimates");
             }
 
 
@@ -272,15 +280,15 @@ class SQService
 
             if ($tdo->status == 'accepted') {
                 $estimate->request->update([
-                    'status'    => 'hired',
+                    // 'status'    => 'hired',
                     'hired_id'  => $estimate->provider_id
                 ]);
 
                 $estimate->request->estimates()
-                ->whereNot('id', $estimate->id)
-                ->update([
-                    'status' => 'rejected'
-                ]);
+                    ->whereNot('id', $estimate->id)
+                    ->update([
+                        'status' => 'rejected'
+                    ]);
             }
 
 
