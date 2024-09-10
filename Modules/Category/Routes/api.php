@@ -56,7 +56,7 @@ Route::group([
         Route::get('/requests/{id}', [ServiceRequestController::class, 'showRequest'])
             ->middleware(['auth:sanctum']);
 
-        Route::get('//leads/{id}', [ServiceRequestController::class, 'showLead'])
+        Route::get('/requests/leads/{id}', [ServiceRequestController::class, 'showLead'])
             ->middleware(['auth:sanctum']);
 
         Route::post('/requests/{id}/ignore', [ServiceRequestController::class, 'ignoreRequest'])
