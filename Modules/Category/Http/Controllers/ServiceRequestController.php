@@ -188,7 +188,7 @@ class ServiceRequestController extends Controller
      * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function showRequest($id)
     {
         $result = $this->SQService->getRequestById($id);
 
@@ -201,6 +201,22 @@ class ServiceRequestController extends Controller
         return $this->okResponse(
             message: "Get request dat successfuly",
             data: ServiceRequestResource::make($result->data)
+        );
+    }
+
+    public function showLead($id)
+    {
+        $result = $this->SQService->getRequestById($id);
+
+        if ( $result->isError() ) {
+            return $this->badResponse(
+                message: $result->errorMessage
+            );
+        }
+
+        return $this->okResponse(
+            message: "Get lead request data successfuly",
+            data: LeadServiceRequestResource::make($result->data)
         );
     }
 

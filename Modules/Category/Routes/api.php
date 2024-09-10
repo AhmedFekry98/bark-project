@@ -53,7 +53,10 @@ Route::group([
         Route::post('/requests/{id}/send-estimate', [ServiceRequestController::class, 'sendEstimate'])
             ->middleware(['auth:sanctum', "role:provider"]);
 
-        Route::get('/requests/{id}', [ServiceRequestController::class, 'show'])
+        Route::get('/requests/{id}', [ServiceRequestController::class, 'showRequest'])
+            ->middleware(['auth:sanctum']);
+
+        Route::get('//leads/{id}', [ServiceRequestController::class, 'showLead'])
             ->middleware(['auth:sanctum']);
 
         Route::post('/requests/{id}/ignore', [ServiceRequestController::class, 'ignoreRequest'])
