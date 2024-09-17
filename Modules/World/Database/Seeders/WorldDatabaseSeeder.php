@@ -14,10 +14,10 @@ class WorldDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        // Model::unguard();
 
-        $this->call([
-            CityTableSeeder::class,
-        ]);
+        // $this->call([
+        //     CityTableSeeder::class,
+        // ]);
     }
 }

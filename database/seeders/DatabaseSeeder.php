@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
 
         // call modules seeders here.
         $this->call([
-            WorldDatabaseSeeder::class,
+            // WorldDatabaseSeeder::class,
             AuthDatabaseSeeder::class,
             CategoryDatabaseSeeder::class,
             // ...
