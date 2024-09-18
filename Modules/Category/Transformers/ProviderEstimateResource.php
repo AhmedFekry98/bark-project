@@ -3,6 +3,7 @@
 namespace Modules\Category\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Review\Transformers\ReviewResource;
 
 class ProviderEstimateResource extends JsonResource
 {
@@ -21,10 +22,12 @@ class ProviderEstimateResource extends JsonResource
             'provider_email'    => $this->provider->email,
             'provider_phone'    => $this->provider->phone,
             "provider_image"    => $this->provider->getFirstMediaUrl('user'),
+            'rating'            => floor($this->provider->reviews()->avg('stars')),
             "price"             => $this->price,
             "estimated_time"    => $this->estimated_time,
             "addational_notes"  => $this->addational_notes,
             "status"            =>  $this->status,
+            'review'            =>  ReviewResource::make($this->provider->reviews()->whereReviewerId(auth()->id())->first() ?? []),
             "created_at"         => $this->created_at->diffForHumans(),
         ];
     }
