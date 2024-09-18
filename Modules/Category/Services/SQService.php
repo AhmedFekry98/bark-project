@@ -245,9 +245,9 @@ class SQService
                 return Result::error("No service request with id '$serviceRequestId'");
             }
 
-            if ($serviceRequest->customer->id) {
-                return Result::error("Canot be update status for this service request");
-            }
+            // if ($serviceRequest->customer->id) {
+            //     return Result::error("Canot be update status for this service request");
+            // }
 
             $serviceRequest->status = $tdo->status;
             $serviceRequest->save();
