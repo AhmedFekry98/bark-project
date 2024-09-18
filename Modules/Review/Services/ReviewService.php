@@ -39,9 +39,9 @@ class ReviewService
                 ->exists();
 
             // keep review if not reviewed before.
-            if ($reviewedBefore) {
-                return Result::error("You keeped your review before");
-            }
+            // if ($reviewedBefore) {
+            //     return Result::error("You keeped your review before");
+            // }
 
 
             $creationData = $tdo->all(
