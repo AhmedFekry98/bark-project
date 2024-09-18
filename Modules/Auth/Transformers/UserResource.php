@@ -27,7 +27,7 @@ class UserResource extends JsonResource
                 'phone'             => $this->phone,
                 'email'             => $this->email,
                 'cityId'            => $this->city_id,
-                'city_name'         => $this->city->name,
+                'city_name'         => $this->city?->name,
                 'zip_code'          => $this->zip_code,
                 'image'             => $this->getFirstMediaUrl('user'),
                 // 'verified'          =>  $this->is_verified,

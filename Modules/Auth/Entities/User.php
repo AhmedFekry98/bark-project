@@ -14,6 +14,7 @@ use Modules\Category\Entities\Category;
 use Modules\Category\Entities\IgnoredRequest;
 use Modules\Category\Entities\Service;
 use Modules\Category\Entities\ServiceRequest;
+use Modules\Review\Entities\Review;
 use Modules\World\Entities\City;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -93,5 +94,10 @@ class User extends Authenticatable implements HasMedia
     public function professions(): BelongsToMany
     {
         return $this->belongsToMany(Profession::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewable_id');
     }
 }
