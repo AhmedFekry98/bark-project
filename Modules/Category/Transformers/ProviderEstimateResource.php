@@ -27,7 +27,7 @@ class ProviderEstimateResource extends JsonResource
             "estimated_time"    => $this->estimated_time,
             "addational_notes"  => $this->addational_notes,
             "status"            =>  $this->status,
-            'review'            =>  ReviewResource::make($this->provider->reviews()->whereReviewerId(auth()->id())->first() ?? []),
+            'review'            =>  ReviewResource::make($this->provider->reviews()->whereReviewerId(auth()->id())->first()),
             "created_at"         => $this->created_at->diffForHumans(),
         ];
     }
