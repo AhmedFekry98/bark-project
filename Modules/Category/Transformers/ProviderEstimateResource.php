@@ -15,6 +15,8 @@ class ProviderEstimateResource extends JsonResource
      */
     public function toArray($request)
     {
+        $review = $this->provider->reviews()->whereReviewerId(auth()->id())->first();
+
         return [
             "id"                => $this->id,
             "provider_id"     => $this->provider->id,
@@ -27,7 +29,7 @@ class ProviderEstimateResource extends JsonResource
             "estimated_time"    => $this->estimated_time,
             "addational_notes"  => $this->addational_notes,
             "status"            =>  $this->status,
-            'review'            =>  ReviewResource::make($this->provider->reviews()->whereReviewerId(auth()->id())->first()),
+            'review'            =>  $review? ReviewResource::make($review): null,
             "created_at"         => $this->created_at->diffForHumans(),
         ];
     }
