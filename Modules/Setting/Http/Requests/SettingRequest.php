@@ -16,8 +16,8 @@ class SettingRequest extends FormRequest
         return [
             'socialmediaLinks'      => ['required', 'array', 'min:1'],
             'socialmediaLinks.*'    => ['required', 'url'],
-            'footerLinks'           => ['required', 'array', 'min:1'],
-            'footerLinks.*'         => ['required', 'url'],
+            'footerLinks'           => ['nullable', 'array', 'min:1'],
+            'footerLinks.*'         => ['nullable', 'url'],
         ];
     }
 

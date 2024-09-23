@@ -14,8 +14,13 @@ class CategoryService
     public function getCategories()
     {
         try {
-            $categories = self::$model::query()
-            ->latest()
+            $query = self::$model::query();
+
+            if (request()->limit) {
+                $query->limit(request()->limit);
+            }
+
+            $categories = $query->latest()
                 ->with('services', function ($q) {
                     $q->latest()
                         ->limit(3);

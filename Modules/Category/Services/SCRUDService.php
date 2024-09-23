@@ -23,7 +23,10 @@ class SCRUDService
     public function getServices()
     {
         try {
-            $services = QueryBuilder::for(self::$model)
+            $query = self::$model::query();
+
+
+            $services = QueryBuilder::for($query)
                 ->latest()
                 ->AllowedFilters([
                     AllowedFilter::custom('limit', new LimitFilter),
