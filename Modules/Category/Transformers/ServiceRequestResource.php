@@ -31,7 +31,7 @@ class ServiceRequestResource extends JsonResource
             'questions_data'             => $this->questions_data,
             'accepted_estimate'         => $this->acceptedEstimate? ProviderEstimateResource::make($this->acceptedEstimate): null,
             'can_send_estimate'          => $this->acceptedEstimate? $this->acceptedEstimate->provider_id != auth()->id(): true,
-            'accepted_estimate'          => $this->acceptedEstimate? $this->acceptedEstimate->provider_id == auth()->id(): false,
+            'accepted'          => $this->acceptedEstimate? $this->acceptedEstimate->provider_id == auth()->id(): false,
             'estimates'                  => ProviderEstimateResource::collection($this->estimates),
             "created_at"                 => $this->created_at->diffForHumans(),
             "updated_at"                 => $this->updated_at->diffForHumans(),
