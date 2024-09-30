@@ -19,7 +19,7 @@ class ServiceResource extends JsonResource
             'category_id'   => $this->category_id,
             "category_name" => $this->category->name,
             'profession_id' => $this->profession_id,
-            'name'  => $this->profession->name,
+            'name'  => $this->profession?->name,
             'image'            => $this->getFirstMediaUrl('image'),
             'questions'        => QuestionResource::collection($this->questions),
         ];
