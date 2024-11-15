@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Modules\Auth\Database\Seeders\AuthDatabaseSeeder;
 use Modules\Category\Database\Seeders\CategoryDatabaseSeeder;
+use Modules\Credits\Database\Seeders\CreditsDatabaseSeeder;
 use Modules\World\Database\Seeders\WorldDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
             // WorldDatabaseSeeder::class,
             AuthDatabaseSeeder::class,
             CategoryDatabaseSeeder::class,
+            CreditsDatabaseSeeder::class,
             // ...
         ]);
     }

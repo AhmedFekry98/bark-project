@@ -27,6 +27,7 @@ return new class extends Migration
             $table->boolean('sales')->nullable();
             $table->boolean('social')->nullable();
             $table->string('verified_at')->nullable(); // for account
+            $table->unsignedInteger('credits')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

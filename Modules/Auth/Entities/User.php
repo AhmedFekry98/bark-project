@@ -37,6 +37,7 @@ class User extends Authenticatable implements HasMedia
         'company_size',
         'sales',
         'social',
+        'credits',
         // 'extra',
     ];
 
@@ -49,6 +50,10 @@ class User extends Authenticatable implements HasMedia
         'verified_at' => 'datetime',
         'service_data'  => 'array',
         // 'extra'       => 'array',
+    ];
+
+    protected $attributes = [
+        'credits' => 15
     ];
 
     protected static function newFactory()
