@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('profession_id');
+            $table->boolean('is_offline')->default(false);
+            $table->unsignedInteger('credits')->default(0);
             $table->timestamps();
         });
     }

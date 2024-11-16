@@ -21,6 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('hired_id')->nullable();
             $table->json('questions_data');
+            $table->integer('total_credits')->default(0);
+            $table->boolean('is_approved')->default(false);
             $table->enum('status', ServiceRequest::$statuses);
             $table->timestamps();
         });

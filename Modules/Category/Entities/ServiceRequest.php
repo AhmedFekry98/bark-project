@@ -19,6 +19,8 @@ class ServiceRequest extends Model
         'city_id',
         'user_id',
         'questions_data',
+        'total_credits',
+        'is_approved',
         'status'
     ];
 

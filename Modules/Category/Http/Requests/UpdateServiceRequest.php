@@ -19,13 +19,18 @@ class UpdateServiceRequest extends FormRequest
         return [
             "name"      => ['nullable', 'string'],
             "image"     => ['nullable', 'image', 'max:4096'],
+            'credits'       => ['nullable', 'integer', 'min:1'],
+            'isOffline'     => ['nullable', 'boolean'],
+
 
             // questions rules.
-            "questions"                   => ['nullable', 'array', 'min:1'],
-            "questions.*.questionText"   => ['required', 'string', 'min:1', 'max:200'],
-            "questions.*.questionNote"   => ['nullable', 'string', 'min:1', 'max:200'],
+            "questions"                     => ['nullable', 'array', 'min:1'],
+            "questions.*.questionText"      => ['required', 'string', 'min:1', 'max:200'],
+            "questions.*.questionNote"      => ['nullable', 'string', 'min:1', 'max:200'],
             "questions.*.type"              => ['required', 'string', "in:$types"],
-            "questions.*.options"   => ['nullable', 'array'],
+            "questions.*.options"           => ['nullable', 'array'],
+            "questions.*.options.value"     => ['required'],
+            "questions.*.options.credits"   => ['nullable', 'integer', 'min:1'],
         ];
     }
 

@@ -16,7 +16,9 @@ class Service extends Model implements HasMedia
 
     protected $fillable = [
         'category_id',
-        'profession_id'
+        'profession_id',
+        'credits',
+        'is_offline',
     ];
 
     protected static function newFactory()
