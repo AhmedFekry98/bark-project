@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Modules\Chat\Http\Controllers\UserChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/chat', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('/user/chats', [UserChatController::class, 'index']);
+    Route::post('/user/send-message', [UserChatController::class, 'store']);
+    Route::get('/users/{user}/chat', [UserChatController::class, 'show']);
+    Route::delete('/users/{user}/chat', [UserChatController::class, 'destroy']);
 });

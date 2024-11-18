@@ -14,6 +14,7 @@ use Modules\Category\Entities\Category;
 use Modules\Category\Entities\IgnoredRequest;
 use Modules\Category\Entities\Service;
 use Modules\Category\Entities\ServiceRequest;
+use Modules\Chat\Entities\Conversation;
 use Modules\Review\Entities\Review;
 use Modules\World\Entities\City;
 use Spatie\MediaLibrary\HasMedia;
@@ -104,5 +105,10 @@ class User extends Authenticatable implements HasMedia
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class, 'reviewable_id');
+    }
+
+    public function conversations(): BelongsToMany
+    {
+        return $this->belongsToMany(Conversation::class, 'conversation_members');
     }
 }

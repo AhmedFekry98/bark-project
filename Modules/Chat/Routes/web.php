@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('chat')->group(function() {
-    Route::get('/', 'ChatController@index');
-});
+// Route::prefix('chat')->group(function() {
+//     Route::get('/', 'ChatController@index');
+// });
