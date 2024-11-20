@@ -25,13 +25,13 @@ class UserChatController extends Controller
      */
     public function index()
     {
-        $resault = $this->conversationService->getChatsForAuth();
-        if ($resault->isError()) {
-            return $this->badResponse(null, $resault->errorMessage);
+        $result = $this->conversationService->getChatsForAuth();
+        if ($result->isError()) {
+            return $this->badResponse(null, $result->errorMessage);
         }
 
 
-        return $this->okResponse(ChatResource::collection($resault->data), 'Get chats successfuly');
+        return $this->okResponse(ChatResource::collection($result->data), 'Get chats successfuly');
     }
 
     /**
@@ -41,16 +41,16 @@ class UserChatController extends Controller
      */
     public function store(SendMessageRequest $request)
     {
-        $resault = $this->conversationService->sendMessage(
+        $result = $this->conversationService->sendMessage(
             TDOFacade::make($request)
         );
 
-        if ($resault->isError()) {
-            return $this->badResponse(null, $resault->errorMessage);
+        if ($result->isError()) {
+            return $this->badResponse(null, $result->errorMessage);
         }
 
         // broadcast message here
-        // broadcast(new MessageSent($resault->data));
+        // broadcast(new MessageSent($result->data));
 
 
         return $this->okResponse(null, 'Message sent successfuly');
@@ -63,13 +63,13 @@ class UserChatController extends Controller
      */
     public function show($userId)
     {
-        $resault = $this->conversationService->getChatData($userId);
-        if ( $resault->isError() ) {
-            return $this->badResponse(null, $resault->errorMessage);
+        $result = $this->conversationService->getChatData($userId);
+        if ( $result->isError() ) {
+            return $this->badResponse(null, $result->errorMessage);
         }
 
 
-        return $this->okResponse(ChatResource::make($resault->data), 'Get chat data successfuly');
+        return $this->okResponse(ChatResource::make($result->data), 'Get chat data successfuly');
     }
 
     /**

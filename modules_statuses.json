@@ -6,5 +6,6 @@
     "Setting": true,
     "Review": true,
     "Credits": true,
-    "Chat": true
+    "Chat": true,
+    "Badge": true
 }
