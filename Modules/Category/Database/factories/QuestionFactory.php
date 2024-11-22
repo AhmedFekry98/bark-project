@@ -4,6 +4,7 @@ namespace Modules\Category\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Category\Entities\Question;
+use Modules\Category\Entities\QuestionOption;
 
 class QuestionFactory extends Factory
 {
@@ -22,22 +23,22 @@ class QuestionFactory extends Factory
     public function definition()
     {
         $type       = $this->faker->randomElement(Question::$types);
-        $options    = null;
-
-
-        if (in_array($type, ['radio', 'checkbox'])) {
-            $options = [
-                'item 1',
-                'item 2',
-                'item 3'
-            ];
-        }
 
         return [
             'question_text'     => $this->faker->unique()->words(asText: true),
             'question_note'     => $this->faker->unique()->words(asText: true),
             'type'              => $type,
-            'options'           => $options,
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function(Question $question) {
+            if (in_array($question->type, ['radio', 'checkbox'])) {
+                QuestionOption::factory(4)->create([
+                    'question_id'   => $question->id
+                ]);
+            }
+        });
     }
 }

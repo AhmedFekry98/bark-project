@@ -5,11 +5,14 @@ namespace Modules\Category\Services;
 use App\ErrorHandlling\Result;
 use Graphicode\Standard\TDO\TDO;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Modules\Auth\Entities\User;
 use Modules\Category\Emails\EstimateEmail;
 use Modules\Category\Entities\Category;
 use Modules\Category\Entities\Estimate;
+use Modules\Category\Entities\Question;
+use Modules\Category\Entities\Service;
 use Modules\Category\Entities\ServiceRequest;
 use Modules\Category\Filters\StatusFilter;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -62,6 +65,7 @@ class SQService
             $ignoredIds = $providerr->ignoredRequests->pluck('id');
 
             $requests = self::query()
+                ->where('is_approved', true)
                 ->withCount('contacts')
                 // check if in professions.
                 ->whereHas(
@@ -225,10 +229,45 @@ class SQService
     public function storeRequest(TDO $tdo)
     {
         try {
-            $creationData = $tdo->all(asSnake: true);
-            $creationData['user_id'] = auth()->id();
+            $creationData = collect($tdo->asSnake())
+                ->except(['answers'])
+                ->toArray();
+
+            $creationData['user_id'] = Auth::id();
+
+            $answers = collect($tdo->answers)->map(function($answerData) {
+                $question = Question::find($answerData['questionId']);
+                if (! $question ) return null;
+
+                $data = [
+                    'question_id'   => $question->id,
+                    'question_text' => $question->question_text,
+                ];
+
+                if ( isset($answerData['optionId']) ) {
+                    $option = $question->options()->find($answerData['optionId']);
+                    if (! $option ) return null;
+                    $data['option_id']          = $option->id;
+                    $data['answer_text']        = $option->value;
+                    $data['increment_credits']  = $option->increment_credits;
+                } else {
+                    $data['answer_text']        = $answerData['answerText'];
+                }
+                
+                return $data;
+            })->filter(fn ($value) => $value != null);
+            
+            $increment_credits  =  $answers->sum('increment_credits');
+
+            $creationData['questions_data'] = $answers->toArray();
 
             $serviceRequest = self::$model::create($creationData);
+            $service = $serviceRequest->service;
+            $total_credits = $service->credits + $increment_credits;
+
+            $serviceRequest->is_approved        = ! $service->is_offline;
+            $serviceRequest->total_credits      =  $total_credits;
+            $serviceRequest->save();
 
             return Result::done($serviceRequest);
         } catch (\Exception $e) {

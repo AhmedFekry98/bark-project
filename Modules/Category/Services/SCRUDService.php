@@ -62,15 +62,31 @@ class SCRUDService
 
             // create questions.
             if ($tdo->questions) {
-                $questions = collect($tdo->questions)
-                    ->map(function ($question) {
-                        $question['question_text']  = $question['questionText'];
-                        $question['question_note']  = $question['questionNote'];
-                        return $question;
-                    })->toArray();
+                $questions = $tdo->questions;
 
-                $service->questions()
-                    ->createMany($questions);
+                foreach ($questions as $index => $questionData) {
+
+                    if (in_array($questionData['type'], ['checkbox', 'radio']) && !isset($questionData['options'])) {
+                        return Result::error("questions.$index.options is required");
+                    }
+
+                    $question = $service->questions()->create([
+                        'question_text'  => $questionData['questionText'],
+                        'question_note'  => $questionData['questionNote'] ?? null,
+                    ]);
+
+
+                    if (isset($questionData['options']) && !empty($questionData['options'])) {
+                        $optionsData = collect($questionData['options'] ?? [])->map(function ($optionData) {
+                            return [
+                                'value'                 => $optionData['value'],
+                                'increment_credits'     => $optionData['incrementCredits'] ?? 0
+                            ];
+                        })->toArray();
+
+                        $question->options()->createMany($optionsData);
+                    }
+                }
             }
 
             // upload category image.
@@ -131,19 +147,33 @@ class SCRUDService
             }
 
             // re-create questions.
+            $service->questions()->delete();
             if ($tdo->questions) {
-                $questions = collect($tdo->questions)
-                    ->map(function ($question) {
-                        $question['question_text']  = $question['questionText'];
-                        $question['question_note']  = $question['questionNote'];
-                        return $question;
-                    })->toArray();
+                $questions = $tdo->questions;
 
-                $service->questions()->delete(); // delete old questions.
+                foreach ($questions as $index => $questionData) {
 
-                // create new questions.
-                $service->questions()
-                    ->createMany($questions);
+                    if (in_array($questionData['type'], ['checkbox', 'radio']) && !isset($questionData['options'])) {
+                        return Result::error("questions.$index.options is required");
+                    }
+
+                    $question = $service->questions()->create([
+                        'question_text'  => $questionData['questionText'],
+                        'question_note'  => $questionData['questionNote'] ?? null,
+                    ]);
+
+
+                    if (isset($questionData['options']) && !empty($questionData['options'])) {
+                        $optionsData = collect($questionData['options'] ?? [])->map(function ($optionData) {
+                            return [
+                                'value'                 => $optionData['value'],
+                                'increment_credits'     => $optionData['incrementCredits'] ?? 0
+                            ];
+                        })->toArray();
+
+                        $question->options()->createMany($optionsData);
+                    }
+                }
             }
 
             // get last version of category.

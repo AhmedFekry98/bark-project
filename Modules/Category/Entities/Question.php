@@ -4,6 +4,7 @@ namespace Modules\Category\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Question extends Model
 {
@@ -13,7 +14,6 @@ class Question extends Model
         'question_text',
         'question_note',
         'type',
-        'options',
     ];
 
     public static $types = [
@@ -23,11 +23,16 @@ class Question extends Model
     ];
 
     protected $casts = [
-        'options'  => 'array'
+        // 
     ];
 
     protected static function newFactory()
     {
         return \Modules\Category\Database\factories\QuestionFactory::new();
+    }
+
+    public function options(): HasMany
+    {
+        return $this->hasMany(QuestionOption::class);
     }
 }

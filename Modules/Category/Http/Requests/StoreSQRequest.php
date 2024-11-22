@@ -18,10 +18,9 @@ class StoreSQRequest extends FormRequest
             // "hiredId"       => ['required', 'integer', 'exists:users,id'],
             "cityId"        => ['required', 'integer', 'exists:cities,id'],
 
-            "questionsData"             => ['required', 'array', 'min:1'],
-            "questionsData.*.id"       => ['required', 'integer', 'exists:questions,id'],
-            "questionsData.*.text"     => ['required', 'string', 'min:1', 'max:200'],
-            "questionsData.*.value"    => ['required', ],
+            "answers"                   => ['required', 'array', 'min:1'],
+            "answers.*.questionId"      => ['required', 'integer', 'exists:questions,id'],
+            "answers.*.optionId"        => ['required', ],
         ];
     }
 

@@ -27,6 +27,8 @@ class ServiceRequestResource extends JsonResource
             'customer_email'             =>  $this->customer->email,
             'customer_location'             =>  $this->customer->city->name,
             'customer_zip_code'         => $this->customer->zip_code,
+            'is_approved'                => $this->is_approved,
+            'total_credits'              => $this->total_credits,
             "status"                     => $this->status,
             'questions_data'             => $this->questions_data,
             'accepted_estimate'         => $this->acceptedEstimate? ProviderEstimateResource::make($this->acceptedEstimate): null,
