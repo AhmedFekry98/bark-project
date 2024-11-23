@@ -20,8 +20,9 @@ Route::group([
     // 'middleware'    => ['auth:sanctum', 'role:admin']
 ], function () {
 
-    Route::get('/'          , [BadgeController::class, 'index']);
+    Route::get('/'         , [BadgeController::class, 'index']);
     Route::post('/create'       , [BadgeController::class, 'store']);
+    Route::post('/assign'  , [BadgeController::class, 'assign']);
     Route::post('/{badge}/update'    , [BadgeController::class, 'update']);
     Route::post('/{badge}/delete'    , [BadgeController::class, 'destroy']);
 

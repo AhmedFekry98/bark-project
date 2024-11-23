@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Badge\Entities\Badge;
 use Modules\Category\Entities\Category;
 use Modules\Category\Entities\IgnoredRequest;
 use Modules\Category\Entities\Service;
@@ -100,6 +101,11 @@ class User extends Authenticatable implements HasMedia
     public function professions(): BelongsToMany
     {
         return $this->belongsToMany(Profession::class);
+    }
+
+    public function badges(): BelongsToMany
+    {
+        return $this->belongsToMany(Badge::class, 'provider_badges');
     }
 
     public function reviews(): HasMany

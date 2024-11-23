@@ -7,6 +7,7 @@ use Graphicode\Standard\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Badge\Http\Requests\AssignBadgesRequest;
 use Modules\Badge\Http\Requests\StoreBadgeRequest;
 use Modules\Badge\Http\Requests\UpdateBadgeRequest;
 use Modules\Badge\Services\BadgeService;
@@ -50,6 +51,19 @@ class BadgeController extends Controller
         }
 
         return $this->createdResponse([], 'Badge created successfuly');
+    }
+
+    public function assign(AssignBadgesRequest $request)
+    {
+        $result = $this->badgeService->assignBadges(
+            TDOFacade::make($request)
+        );
+
+        if ($result->isError()) {
+            return $this->badResponse([], $result->errorMessage);
+        }
+
+        return $this->createdResponse([], 'Badges assigned successfuly');
     }
 
     /**

@@ -14,6 +14,11 @@ class BadgeResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id'                => $this->id,
+            'icon'              => $this->getFirstMediaUrl('icon'),
+            'label'             => $this->label,
+            'assignedTo'        => $this->providers_count,
+        ];
     }
 }
