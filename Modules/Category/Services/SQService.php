@@ -120,9 +120,9 @@ class SQService
 
             $provider = auth()->user();
 
-            // more logic here?
-            // step 1: check  has due credits
-            // step 2 : increment credits and make transaction by it.
+            if ($provider->credits < $serviceRequest->total_credits) {
+                return Result::error("Your credits < $serviceRequest->total_credits");
+            }
 
             $serviceRequest->contacts()->create([
                 'provider_id'    => $provider->id
@@ -235,28 +235,28 @@ class SQService
 
             $creationData['user_id'] = Auth::id();
 
-            $answers = collect($tdo->answers)->map(function($answerData) {
+            $answers = collect($tdo->answers)->map(function ($answerData) {
                 $question = Question::find($answerData['questionId']);
-                if (! $question ) return null;
+                if (! $question) return null;
 
                 $data = [
                     'question_id'   => $question->id,
                     'question_text' => $question->question_text,
                 ];
 
-                if ( isset($answerData['optionId']) ) {
+                if (isset($answerData['optionId'])) {
                     $option = $question->options()->find($answerData['optionId']);
-                    if (! $option ) return null;
+                    if (! $option) return null;
                     $data['option_id']          = $option->id;
                     $data['answer_text']        = $option->value;
                     $data['increment_credits']  = $option->increment_credits;
                 } else {
                     $data['answer_text']        = $answerData['answerText'];
                 }
-                
+
                 return $data;
-            })->filter(fn ($value) => $value != null);
-            
+            })->filter(fn($value) => $value != null);
+
             $increment_credits  =  $answers->sum('increment_credits');
 
             $creationData['questions_data'] = $answers->toArray();
@@ -322,6 +322,17 @@ class SQService
                     // 'status'    => 'hired',
                     'hired_id'  => $estimate->provider_id
                 ]);
+
+                // get total of request credits
+                $total_credits = $estimate->request->total_credits;
+                if ($estimate->request->provider->credits < $total_credits) return Result::error("provider has no due credits");
+
+                // decrement due credits from provider account.
+                $estimate->request->provider->decrement('credits', $total_credits);
+
+                // creae transaction by value of $total_credits
+                // ...
+
 
                 $estimate->request->estimates()
                     ->whereNot('id', $estimate->id)
