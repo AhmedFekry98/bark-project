@@ -7,6 +7,7 @@ use Graphicode\Standard\TDO\TDO;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Modules\Auth\Entities\User;
 use Modules\Category\Emails\EstimateEmail;
 use Modules\Category\Entities\Category;
@@ -15,6 +16,9 @@ use Modules\Category\Entities\Question;
 use Modules\Category\Entities\Service;
 use Modules\Category\Entities\ServiceRequest;
 use Modules\Category\Filters\StatusFilter;
+use Modules\Category\Notifications\AcceptEstimateNotification;
+use Modules\Category\Notifications\NewEstimateNotification;
+use Modules\Category\Notifications\NewRequestNotification;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -178,6 +182,8 @@ class SQService
             Mail::to($customerEmail)
                 ->send(new EstimateEmail($estimate));
 
+            $serviceRequest->customer->notify(new NewEstimateNotification($estimate));
+
 
             return Result::done(true);
         } catch (\Exception $e) {
@@ -269,6 +275,11 @@ class SQService
             $serviceRequest->total_credits      =  $total_credits;
             $serviceRequest->save();
 
+            if (! $serviceRequest->is_approved ) {
+                $admins = User::whereHas('roles', fn ($q) => $q->whereName('admin'))->get();
+                Notification::send($admins, new NewRequestNotification($serviceRequest) );
+            }
+
             return Result::done($serviceRequest);
         } catch (\Exception $e) {
             return Result::error($e->getMessage());
@@ -339,6 +350,8 @@ class SQService
                     ->update([
                         'status' => 'rejected'
                     ]);
+
+                    $estimate->request->provider->notify( new AcceptEstimateNotification($estimate) );
             }
 
 
